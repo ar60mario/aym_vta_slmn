@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.Stores" schema="sakila" table="stores">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="fecha" type="date" column="FECHA"/>
+        <property name="fechaAnterior" type="date" column="FECHA_ANTERIOR"/>
+        <property name="totalFacturadoCf" type="double" column="TOTAL_FACTURADO_CF"/>
+        <property name="totalFacturadoOf" type="double" column="TOTAL_FACTURADO_OF"/>
+        <property name="saldoDeudorAnteriorCf" type="double" column="SALDO_DEUDOR_ANTERIOR_CF"/>
+        <property name="saldoDeudorAnteriorOf" type="double" column="SALDO_DEUDOR_ANTERIOR_OF"/>
+        <property name="subtotalArriba" type="double" column="SUBTOTAL_ARRIBA"/>
+        <property name="cajaInicial" type="double" column="CAJA_INICIAL"/>
+        <property name="totalDeudoresHoyCf" type="double" column="TOTAL_DEUDORES_HOY_CF"/>
+        <property name="totalDeudoresHoyOf" type="double" column="TOTAL_DEUDORES_HOY_OF"/>
+        <property name="totalDeposito" type="double" column="TOTAL_DEPOSITO"/>
+        <property name="totalVales" type="double" column="TOTAL_VALES"/>
+        <property name="subtotalAbajo" type="double" column="SUBTOTAL_ABAJO"/>
+        <property name="diferencia" type="double" column="DIFERENCIA"/>
+        <property name="cerrado" type="boolean" column="CERRADO"/>
+        <property name="pagoProveedores" type="double" column="PAGO_PROVEEDORES"/>
+        <property name="cobranza" type="double" column="COBRANZA"/> 
+        <property name="payments" type="double" column="COBRANZA_CF"/>
+        <property name="saldosInactivosHoyCf" type="double" column="SALDOS_INACTIVOS_HOY_CF"/>
+        <property name="saldosInactivosHoyOf" type="double" column="SALDOS_INACTIVOS_HOY_OF"/>
+        <property name="saldosInactivosAnteriorCf" type="double" column="SALDOS_INACTIVOS_ANTERIOR_CF"/>
+        <property name="saldosInactivosAnteriorOf" type="double" column="SALDOS_INACTIVOS_ANTERIOR_OF"/>
+    </class>
+</hibernate-mapping>

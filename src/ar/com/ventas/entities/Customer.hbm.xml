@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.Customer" schema="sakila" table="customer">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="codigo" type="string" column="CODIGO"/>
+        <property name="descuento" type="float" column="DESCUENTO"/>
+        <property name="tieneDescuento" type="boolean" column="TIENE_DESCUENTO"/>
+        <property name="activo" type="boolean" column="ACTIVO"/>
+        <property name="saldo" type="double" column="SALDO"/>
+        <property name="observaciones" type="string" column="OBSERVACIONES"/>
+        <property name="limiteVenta" type="double" column="LIMITE_VENTA"/>
+        <property name="tieneLimiteVenta" type="boolean" column="TIENE_LIMITE_VENTA"/>
+    </class>
+</hibernate-mapping>

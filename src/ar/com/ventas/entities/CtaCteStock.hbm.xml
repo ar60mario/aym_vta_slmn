@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.CtaCteStock" schema="ventas" table="cta_cte_stock">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="fecha" type="date" column="FECHA"/>
+        <property name="fechaSistema" type="date" column="FECHA_SISTEMA"/>
+        <property name="letra" type="string" column="LETRA"/>
+        <property name="sucursal" type="integer" column="SUCURSAL"/>
+        <property name="numero" type="integer" column="NUMERO"/>
+        <property name="cantidad" type="float" column="CANTIDAD"/>
+        <property name="comprobante" type="long" column="COMPROBANTE"/>
+        <many-to-one name="proveedor"
+                    class="ar.com.ventas.entities.Proveedor"
+                     lazy="false">
+                     <column name="ID_PROVEEDOR" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="producto"
+                    class="ar.com.ventas.entities.Producto"
+                     lazy="false">
+                     <column name="ID_PRODUCTO" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="usuario"
+                    class="ar.com.ventas.entities.Usuario"
+                     lazy="false">
+                     <column name="ID_USUARIO" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

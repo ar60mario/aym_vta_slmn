@@ -1,0 +1,1853 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ar.com.ventas.frame;
+
+import ar.com.ventas.entities.Cliente;
+import ar.com.ventas.entities.Customer;
+import ar.com.ventas.entities.Producto;
+import ar.com.ventas.entities.Request;
+import ar.com.ventas.entities.RequestRow;
+import ar.com.ventas.entities.Routines;
+import ar.com.ventas.entities.Usuario;
+import ar.com.ventas.main.MainFrame;
+import ar.com.ventas.services.ClienteService;
+import ar.com.ventas.services.CustomerService;
+import ar.com.ventas.services.ProductoService;
+import ar.com.ventas.services.RequestRowService;
+import ar.com.ventas.services.RoutinesService;
+import ar.com.ventas.services.UsuarioService;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.Printable;
+import static java.awt.print.Printable.NO_SUCH_PAGE;
+import static java.awt.print.Printable.PAGE_EXISTS;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author Mario
+ */
+public class DuplicadoPedidoFrame extends javax.swing.JFrame {
+
+    private List<RequestRow> renglonPedido = new ArrayList<RequestRow>();
+    private Request pedido;
+    private String textoPedidoPapel;
+    private String fechaPedidoPapel;
+    private String clientePedidoPapel;
+    private String codigoClientePedidoPapel;
+    private String direccionPedidoPapel;
+    //private String cuitPedidoPapel;
+    private String vencimientoPedidoPapel;
+    //private String inscripcionClientePedidoPapel;
+    private String nombresColumnaPedidoPapel;
+    private String[] renglones = null;
+    private String texto1PedidoPapel;
+    private String texto2PedidoPapel;
+    private String texto3PedidoPapel;
+    //private String totalDeudaPedidoPapel;
+    private String lineaTotalesPedidoPapel;
+    //private String totalPagarPedidoPapel;
+    private String importeTotalPedidoPapel;
+    private String cantidadesPedidoPapel;
+    private Date fecha;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private Cliente clientePedido = null;
+    private Customer customerPedido = null;
+    private Producto producto = null;
+    //private DefaultTableModel tabla = null;
+    private Double totalPedido = 0.00;
+    private Double totalImpuesto = 0.00;
+    private Double totalIva = 0.00;
+    private Double totalGravado = 0.00;
+    private Double totalNoGravado = 0.0;
+    private Double gravado = 0.00;
+    private Double noGravado = 0.00;
+    private Double iva = 0.00;
+    //private Float porcentualIva;
+    private Double impuesto = null;
+    private Double totalLinea = 0.00;
+    private Boolean tieneDto = false;
+    private Float descuento = 0F;
+    //private Cliente clienteSeleccionado;
+    //private Producto productoSeleccionado;
+    //private Float cantidad;
+    //private Integer categoriaIva = 1;
+    private DecimalFormat df = new DecimalFormat("#0.00");
+    private DecimalFormat df1 = new DecimalFormat("#0.0");
+    private Double saldoCliente = 0.00;
+    //private String filtro = "";
+    private String letraPedido;
+    private Integer numeroPedido;
+    private Routines config = null;
+    private Double precioFinal = 0.0;
+    private Integer nro = 0;
+    private Integer maxNro = 40;
+    private Integer cantidadAtadosMassalin;
+    private Integer cantidadAtadosNobleza;
+    public Boolean encontrado;
+    //private double totalDtoUni = 0.0;
+    private Double totalDescuen = 0.0;
+    private Usuario usuario;
+    private final Integer nivel = 1;
+
+    /**
+     * Creates new form PedidoFrame
+     */
+    public DuplicadoPedidoFrame(Request pe) {
+        //getContentPane().setBackground(new java.awt.Color(192, 192, 192));
+        getContentPane().setBackground(new java.awt.Color(245, 222, 179));
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.pedido = pe;
+        limpiarCampos();
+        bloquearCampos();
+        llenarCampos();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaPedido = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        codigoTxt = new javax.swing.JTextField();
+        razonSocialTxt = new javax.swing.JTextField();
+        fechaTxt = new javax.swing.JTextField();
+        ivaTxt = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        totalTxt = new javax.swing.JTextField();
+        terminarBtn = new javax.swing.JButton();
+        cancelarBtn = new javax.swing.JButton();
+        buscarBtn = new javax.swing.JButton();
+        descuentoGlobalLbl = new javax.swing.JLabel();
+        descuentoGlobalTxt = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        descuentoVolumenTxt = new javax.swing.JTextField();
+        texto1PiePedidoTxt = new javax.swing.JTextField();
+        texto2PiePedidoTxt = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        cantidadAtadosMassalinTxt = new javax.swing.JTextField();
+        cantidadAtadosNoblezaTxt = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        cantidadItemsTxt = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        importeMassalinTxt = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        importeNoblezaTxt = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Ped. - A y M");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        tablaPedido.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Cant", "Detalle", "P.Unit", "Gravado", "Impuesto", "IVA", "dto.", "SubTotal", "Sug."
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaPedido);
+        if (tablaPedido.getColumnModel().getColumnCount() > 0) {
+            tablaPedido.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tablaPedido.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tablaPedido.getColumnModel().getColumn(2).setPreferredWidth(330);
+            tablaPedido.getColumnModel().getColumn(3).setPreferredWidth(20);
+            tablaPedido.getColumnModel().getColumn(4).setPreferredWidth(25);
+            tablaPedido.getColumnModel().getColumn(5).setPreferredWidth(25);
+            tablaPedido.getColumnModel().getColumn(6).setPreferredWidth(25);
+            tablaPedido.getColumnModel().getColumn(7).setPreferredWidth(20);
+            tablaPedido.getColumnModel().getColumn(8).setPreferredWidth(30);
+            tablaPedido.getColumnModel().getColumn(9).setPreferredWidth(20);
+        }
+
+        jLabel1.setText("Cliente:");
+
+        jLabel2.setText("Iva:");
+
+        jLabel4.setText("Fecha:");
+
+        codigoTxt.setText("CODIGO");
+        codigoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                codigoTxtKeyPressed(evt);
+            }
+        });
+
+        razonSocialTxt.setText("RAZON SOCIAL");
+
+        fechaTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        fechaTxt.setText("FECHA");
+
+        ivaTxt.setText("IVA");
+
+        jLabel8.setText("TOTAL PEDIDO:");
+
+        totalTxt.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        totalTxt.setForeground(new java.awt.Color(204, 0, 0));
+        totalTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        totalTxt.setText("TOTAL");
+
+        terminarBtn.setText("Terminar Pedido");
+        terminarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                terminarBtnActionPerformed(evt);
+            }
+        });
+
+        cancelarBtn.setText("Cancelar Pedido");
+        cancelarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarBtnActionPerformed(evt);
+            }
+        });
+
+        buscarBtn.setText("Buscar");
+        buscarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarBtnActionPerformed(evt);
+            }
+        });
+
+        descuentoGlobalLbl.setText("Descuento:");
+
+        descuentoGlobalTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        descuentoGlobalTxt.setText("DESC");
+
+        jLabel12.setText("Descuento");
+
+        descuentoVolumenTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        descuentoVolumenTxt.setText("DESCUENTO");
+
+        texto1PiePedidoTxt.setText("TEXTO 1 PIE PEDIDO");
+        texto1PiePedidoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                texto1PiePedidoTxtKeyPressed(evt);
+            }
+        });
+
+        texto2PiePedidoTxt.setText("TEXTO 2 PIE PEDIDO");
+        texto2PiePedidoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                texto2PiePedidoTxtKeyPressed(evt);
+            }
+        });
+
+        jLabel15.setText("Massalin:");
+
+        jLabel17.setText("Nobleza:");
+
+        cantidadAtadosMassalinTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        cantidadAtadosMassalinTxt.setText("Cantidad Massalin");
+
+        cantidadAtadosNoblezaTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        cantidadAtadosNoblezaTxt.setText("Cantidad Nobleza");
+
+        jLabel18.setText("Cant. Items:");
+
+        cantidadItemsTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        cantidadItemsTxt.setText("Cant Items");
+
+        jLabel14.setText("Importe:");
+
+        importeMassalinTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        importeMassalinTxt.setText("Importe M");
+
+        jLabel9.setText("Importe:");
+
+        importeNoblezaTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        importeNoblezaTxt.setText("Importe N");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(codigoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buscarBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(razonSocialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fechaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
+                                .addComponent(descuentoGlobalLbl)
+                                .addGap(18, 18, 18)
+                                .addComponent(descuentoGlobalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(texto1PiePedidoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+                                    .addComponent(texto2PiePedidoTxt))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(totalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(cancelarBtn)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(terminarBtn)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(descuentoVolumenTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(39, 39, 39))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cantidadItemsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cantidadAtadosMassalinTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(importeMassalinTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cantidadAtadosNoblezaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(importeNoblezaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ivaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4)
+                    .addComponent(codigoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(razonSocialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fechaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarBtn)
+                    .addComponent(descuentoGlobalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(descuentoGlobalLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(ivaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(descuentoVolumenTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(texto1PiePedidoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(totalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(texto2PiePedidoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(cantidadItemsTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(terminarBtn)
+                    .addComponent(cancelarBtn)
+                    .addComponent(jLabel15)
+                    .addComponent(cantidadAtadosMassalinTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14)
+                    .addComponent(importeMassalinTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17)
+                    .addComponent(cantidadAtadosNoblezaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(importeNoblezaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
+        buscarCliente();
+    }//GEN-LAST:event_buscarBtnActionPerformed
+
+    private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
+        int escape = JOptionPane.showConfirmDialog(null, "Esta seguro de abandonar el Pedido?", "Atención", JOptionPane.YES_NO_OPTION);
+        // 0 = si; 1 = no
+        if (escape == 0) {
+            volver();
+//            limpiarCampos();
+//            bloquearCampos();
+//            borrarTablaProductos();
+//            terminarBtn.setEnabled(false);
+//            //volverBtn.setEnabled(true);
+//            codigoTxt.requestFocus();
+//            buscarBtn.setEnabled(true);
+            //cancelarBtn.setEnabled(false);
+            //leerCantidadBtn.setEnabled(false);
+            //nuevaCantidadTxt.setEditable(false);
+            //nuevaCantidadTxt.setEnabled(false);
+//            nombreClienteABuscarTxt.setEnabled(true);
+//            buscarClienteXNombre.setEnabled(true);
+//            comboClientes.setEnabled(true);
+        } else {
+//            agregarBtn.setEnabled(true);
+//            codigoBarrasTxt.setEnabled(false);
+//            codigoProductoTxt.setEnabled(false);
+//            cantidadTxt.setEnabled(false);
+//            nombreProductoABuscar.setEnabled(false);
+//            nombreProductoConsultaTxt.setEnabled(false);
+//            comboProductos.setEnabled(false);
+//            incorporarProductoBtn.setEnabled(false);
+//            buscarProductoXNombre.setEnabled(false);
+//            eliminarItemBtn.setEnabled(true);
+//            leerImporteBtn.setEnabled(true);
+//            leerCantidadBtn.setEnabled(true);
+//            nuevoImporteTxt.setEnabled(true);
+//            nuevaCantidadTxt.setEnabled(true);
+//            nuevoImporteTxt.setText("");
+//            nuevaCantidadTxt.setText("");
+//            grabarCantidadBtn.setEnabled(false);
+//            grabarImporteBtn.setEnabled(false);
+//            agregarBtn.requestFocus();
+            tablaPedido.setEnabled(true);
+        }
+    }//GEN-LAST:event_cancelarBtnActionPerformed
+
+    private void terminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terminarBtnActionPerformed
+        int escape = JOptionPane.showConfirmDialog(null, "Quiere Imprimir?",
+                "Duplicado de Pedido",
+                JOptionPane.YES_NO_OPTION);
+        if (escape == 0) {
+            terminarPedido();
+        }
+    }//GEN-LAST:event_terminarBtnActionPerformed
+
+    private void codigoTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoTxtKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!codigoTxt.getText().isEmpty()) {
+                cancelarBtn.setEnabled(true);
+                buscarCliente();
+            }
+        } else {
+            if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                MainFrame mf = new MainFrame();
+                mf.setVisible(true);
+                this.dispose();
+            } else {
+                if (evt.getKeyCode() != 8 // back space
+                        && evt.getKeyCode() != 37 //flecha izquierda
+                        && evt.getKeyCode() != 39 //flecha derecha
+                        && evt.getKeyCode() != 17 //Ctrl
+                        && evt.getKeyCode() != 16 //Mayuscula
+                        && evt.getKeyCode() != 38 //flecha arriba
+                        && evt.getKeyCode() != 40 //flecha abajo
+                        && evt.getKeyCode() != 67 //C
+                        && evt.getKeyCode() != 20 //traba mayusculas
+                        && evt.getKeyCode() != 27 //Escape
+                        && evt.getKeyCode() != 86 //V
+                        && evt.getKeyCode() != 36 //Inicio
+                        && evt.getKeyCode() != 35 //fin
+                        && evt.getKeyCode() != 155 //Insert
+                        // && evt.getKeyCode() != 110  // punto decimal
+                        //&& evt.getKeyCode() != 45 // Menos
+                        && evt.getKeyCode() != 127) { // Suprimir
+                    if (!isNumeric(evt)) {
+                        JOptionPane.showMessageDialog(this, "Solo números");
+                        codigoTxt.setText("");
+                        codigoTxt.requestFocus();
+
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_codigoTxtKeyPressed
+
+    private boolean isNumeric(KeyEvent evt) {
+        String cod = String.valueOf(evt.getKeyChar());
+        try {
+            Integer.parseInt(cod);
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+        return true;
+    }
+
+    private void texto1PiePedidoTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_texto1PiePedidoTxtKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            terminarBtn.requestFocus();
+        }
+    }//GEN-LAST:event_texto1PiePedidoTxtKeyPressed
+
+    private void texto2PiePedidoTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_texto2PiePedidoTxtKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            terminarBtn.requestFocus();
+        }
+    }//GEN-LAST:event_texto2PiePedidoTxtKeyPressed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DuplicadoPedidoFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DuplicadoPedidoFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DuplicadoPedidoFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DuplicadoPedidoFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new DuplicadoPedidoFrame(null).setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscarBtn;
+    private javax.swing.JButton cancelarBtn;
+    private javax.swing.JTextField cantidadAtadosMassalinTxt;
+    private javax.swing.JTextField cantidadAtadosNoblezaTxt;
+    private javax.swing.JTextField cantidadItemsTxt;
+    private javax.swing.JTextField codigoTxt;
+    private javax.swing.JLabel descuentoGlobalLbl;
+    private javax.swing.JTextField descuentoGlobalTxt;
+    private javax.swing.JTextField descuentoVolumenTxt;
+    private javax.swing.JTextField fechaTxt;
+    private javax.swing.JTextField importeMassalinTxt;
+    private javax.swing.JTextField importeNoblezaTxt;
+    private javax.swing.JTextField ivaTxt;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField razonSocialTxt;
+    private javax.swing.JTable tablaPedido;
+    private javax.swing.JButton terminarBtn;
+    private javax.swing.JTextField texto1PiePedidoTxt;
+    private javax.swing.JTextField texto2PiePedidoTxt;
+    private javax.swing.JTextField totalTxt;
+    // End of variables declaration//GEN-END:variables
+
+    private void limpiarCampos() {
+        texto1PiePedidoTxt.setText("");
+        texto2PiePedidoTxt.setText("");
+        cantidadAtadosMassalinTxt.setText("");
+        cantidadAtadosNoblezaTxt.setText("");
+        ivaTxt.setText("");
+        importeMassalinTxt.setText("");
+        importeNoblezaTxt.setText("");
+//        codigoBarrasTxt.setText("");
+//        codigoProductoTxt.setText("");
+        codigoTxt.setText("");
+        fechaTxt.setText("");
+        razonSocialTxt.setText("");
+//        cantidadTxt.setText("");
+        totalTxt.setText("");
+//        saldoTxt.setText("0.00");
+        totalTxt.setText("0.00");
+//        comboClientes.removeAllItems();
+//        comboClientes.addItem("");
+//        comboProductos.removeAllItems();
+//        comboProductos.addItem("");
+//        nombreClienteABuscarTxt.setText("");
+//        nombreProductoABuscar.setText("");
+        descuentoVolumenTxt.setText("0.00");
+//        descuentoLineaTxt.setText("");
+//        totalDeudaTxt.setText("0.00");
+        cantidadAtadosMassalin = 0;
+        cantidadAtadosNobleza = 0;
+//        nombreProductoConsultaTxt.setText("");
+//        precioProductoConsultaTxt.setText("");
+        cantidadItemsTxt.setText("");
+        descuentoGlobalTxt.setText("");
+//        nuevaCantidadTxt.setText("");
+//        nuevoImporteTxt.setText("");
+    }
+
+    private void bloquearCampos() {
+        ivaTxt.setEditable(false);
+//        codigoBarrasTxt.setEnabled(false);
+        codigoTxt.setEnabled(true);
+        codigoTxt.setEditable(true);
+//        codigoProductoTxt.setEnabled(false);
+        fechaTxt.setEditable(false);
+        razonSocialTxt.setEditable(false);
+//        cantidadTxt.setEnabled(false);
+        totalTxt.setEnabled(false);
+//        saldoTxt.setEditable(false);
+        descuentoVolumenTxt.setEnabled(false);
+//        totalDeudaTxt.setEnabled(false);
+//        nombreProductoABuscar.setEnabled(false);
+//        nombreProductoConsultaTxt.setEnabled(false);
+//        agregarBtn.setEnabled(false);
+        //cancelarBtn.setEnabled(false);
+//        if (nro > 0) {
+//            terminarBtn.setEnabled(true);
+//        } else {
+//            terminarBtn.setEnabled(false);
+//        }
+//        descuentoLineaTxt.setEnabled(false);
+//        incorporarProductoBtn.setEnabled(false);
+//        buscarProductoXNombre.setEnabled(false);
+//        eliminarItemBtn.setEnabled(false);
+//        descuentoBtn.setEnabled(false);
+//        comboProductos.setEnabled(false);
+//        precioProductoConsultaTxt.setEnabled(false);
+        cantidadItemsTxt.setEnabled(false);
+        texto1PiePedidoTxt.setEnabled(false);
+        texto2PiePedidoTxt.setEnabled(false);
+        cantidadAtadosMassalinTxt.setEditable(false);
+        cantidadAtadosNoblezaTxt.setEditable(false);
+        descuentoGlobalTxt.setEditable(false);
+//        nuevaCantidadTxt.setEditable(false);
+//        leerCantidadBtn.setEnabled(false);
+//        grabarCantidadBtn.setEnabled(false);
+//        nuevaCantidadTxt.setEnabled(false);
+//        leerImporteBtn.setEnabled(false);
+//        grabarImporteBtn.setEnabled(false);
+//        nuevoImporteTxt.setEnabled(false);
+        importeMassalinTxt.setEditable(false);
+        importeNoblezaTxt.setEditable(false);
+    }
+
+//    private void llenarComboClientes() {
+//        filtro = nombreClienteABuscarTxt.getText();
+//        List<Cliente> clientes = null;
+//        try {
+//            clientes = new ClienteService().getClientesByFiltro(filtro);
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "Error - leyendo Clientes");
+//            Logger
+//                    .getLogger(DuplicadoPedidoFrame.class
+//                            .getName()).log(Level.SEVERE, null, ex);
+//        }
+//        DefaultComboBoxModel model = (DefaultComboBoxModel) comboClientes.getModel();
+//        if (clientes != null && !clientes.isEmpty()) {
+//            for (Cliente cli : clientes) {
+//                model.addElement(cli.getRazonSocial());
+//            }
+//            comboClientes.setModel(model);
+//        }
+//    }
+
+//    private void llenarComboProductos() {
+//        filtro = nombreProductoABuscar.getText();
+//        List<Producto> productos = new ArrayList<Producto>();
+//        try {
+//            productos = new ProductoService().getProductosByFiltroActivosSinDepo(filtro);
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "Error - leyendo Productos");
+//            Logger
+//                    .getLogger(DuplicadoPedidoFrame.class
+//                            .getName()).log(Level.SEVERE, null, ex);
+//        }
+//        DefaultComboBoxModel model = (DefaultComboBoxModel) comboProductos.getModel();
+//        if (productos != null && !productos.isEmpty()) {
+//            for (Producto pro : productos) {
+//                model.addElement(pro.getDetalle());
+//            }
+//            comboProductos.setModel(model);
+//        }
+//    }
+    private void buscarCliente() {
+        //filtro = "";
+        Long id = (long) 1;
+        try {
+            Routines conf = new RoutinesService().getFacturas(id);
+            //porcentualIva = conf.getIva();
+        } catch (Exception ex) {
+            Logger.getLogger(DuplicadoPedidoFrame.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+        if (codigoTxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un código");
+            codigoTxt.requestFocus();
+            buscarBtn.setEnabled(true);
+            return;
+        }
+        fecha = Calendar.getInstance().getTime();
+        clientePedido = null;
+        customerPedido = null;
+        //categoriaIva = 4;
+        try {
+            clientePedido = new ClienteService().getClienteByCodigo(codigoTxt.getText());
+            customerPedido = new CustomerService().getCustomerByCodigo(codigoTxt.getText());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error - cliente");
+            buscarBtn.setEnabled(true);
+            codigoTxt.requestFocus();
+            Logger
+                    .getLogger(DuplicadoPedidoFrame.class
+                            .getName()).log(Level.SEVERE, null, ex);
+        }
+        if (clientePedido != null) {
+            if (customerPedido == null) {
+                JOptionPane.showMessageDialog(this, "Cliente no habilitado");
+                buscarBtn.setEnabled(true);
+                codigoTxt.requestFocus();
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Cliente inexistente");
+        }
+        if (!customerPedido.getActivo()) {
+            JOptionPane.showMessageDialog(this, "Cliente Inactivo");
+            buscarBtn.setEnabled(true);
+            codigoTxt.requestFocus();
+            return;
+        }
+        tieneDto = false;
+        descuento = 0F;
+        if (clientePedido != null) {
+            razonSocialTxt.setText(clientePedido.getRazonSocial());
+            if (customerPedido.getTieneDescuento() != null) {
+                if (customerPedido.getTieneDescuento()) {
+                    descuentoGlobalTxt.setText(df1.format(customerPedido.getDescuento()));
+                    tieneDto = true;
+                    descuento = customerPedido.getDescuento();
+                } else {
+                    descuentoGlobalTxt.setText(df1.format(0));
+                }
+            } else {
+                descuentoGlobalTxt.setText(df1.format(0));
+            }
+            fechaTxt.setText(sdf.format(fecha));
+            if (clientePedido.getCategoriaDeIva() != null) {
+                if (clientePedido.getCategoriaDeIva() == 1) {
+                    ivaTxt.setText("Resp. Inscripto");
+                }
+                if (clientePedido.getCategoriaDeIva() == 2) {
+                    ivaTxt.setText("Monotributo");
+                }
+                if (clientePedido.getCategoriaDeIva() == 4) {
+                    ivaTxt.setText("Consumidor Final");
+                }
+                //categoriaIva = clientePedido.getCategoriaDeIva();
+            } else {
+                ivaTxt.setText("Consumidor Final");
+            }
+//            if (clientePedido.getSaldo() != null) {
+//                saldoTxt.setText(String.valueOf(df.format(clientePedido.getSaldo())));
+//                saldoCliente = clientePedido.getSaldo();
+//            } else {
+//                saldoTxt.setText("0.00");
+//                saldoCliente = 0.0;
+//            }
+//            agregarBtn.setEnabled(true);
+            buscarBtn.setEnabled(false);
+//            buscarClienteXNombre.setEnabled(false);
+//            nombreClienteABuscarTxt.setEnabled(false);
+//            comboClientes.setEnabled(false);
+//            nombreProductoConsultaTxt.setEditable(false);
+//            precioProductoConsultaTxt.setEditable(false);
+            codigoTxt.setEditable(false);
+            descuentoVolumenTxt.setEnabled(true);
+            descuentoVolumenTxt.setEditable(false);
+            totalTxt.setEnabled(true);
+            totalTxt.setEditable(false);
+//            totalDeudaTxt.setEnabled(true);
+//            totalDeudaTxt.setEditable(false);
+//            volverBtn.setEnabled(false);
+            //cancelarBtn.setEnabled(true);
+//            leerCantidadBtn.setEnabled(false);
+//            nuevaCantidadTxt.setEditable(true);
+//            nuevaCantidadTxt.setEnabled(false);
+            agregarProducto();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error - cliente no existe");
+            buscarBtn.setEnabled(true);
+            codigoTxt.requestFocus();
+        }
+    }
+
+    private void terminarPedido() {
+        //Integer categoriaIva = 2;
+        //Request pedido = new Request();
+        //saldoCliente = clientePedido.getSaldo() + customerPedido.getSaldo();
+//        Long id = (long) 1;
+//        try {
+//            config = new RoutinesService().getFacturas(id);
+//        } catch (Exception ex) {
+//            Logger.getLogger(DuplicadoPedidoFrame.class
+//                    .getName()).log(Level.SEVERE, null, ex);
+//        }
+//        if (categoriaIva.equals(1)) {
+//            letraPedido = "A";
+//            // es inscriptp
+//            numeroPedido = config.getNumeroPedido();
+//            numeroPedido += 1;
+//            config.setNumeroPedido(numeroPedido);
+//            try {
+//                new RoutinesService().updateRoutines(config);
+//            } catch (Exception ex) {
+//                Logger.getLogger(PedidoFrame.class
+//                        .getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } else {
+        letraPedido = "B";
+        // el resto de las categorias
+        numeroPedido = pedido.getNumeroPedido();
+//        numeroPedido += 1;
+//        config.setNumeroPedido(numeroPedido);
+//        try {
+//            new RoutinesService().updateRoutines(config);
+//
+//        } catch (Exception ex) {
+//            Logger.getLogger(DuplicadoPedidoFrame.class
+//                    .getName()).log(Level.SEVERE, null, ex);
+//        }
+        //}
+//        pedido.setCliente(customerPedido);
+//        pedido.setDescuentoGlobal(0.0);
+//        pedido.setExento(0.0);
+//        pedido.setFecha(fecha);
+//        pedido.setGravado(totalGravado);
+//        pedido.setImpuesto(totalImpuesto);
+//        pedido.setIva(totalIva);
+//        pedido.setNoGravado(0.0);
+//        pedido.setTotal(totalPedido);
+//        pedido.setLetra(letraPedido);
+//        pedido.setNumeroPedido(numeroPedido);
+//        pedido.setFacturado(false);
+//        pedido.setTextoPiePedido1(texto1PiePedidoTxt.getText());
+//        pedido.setTextoPiePedido2(texto2PiePedidoTxt.getText());
+//        for (RequestRow rePe : renglonPedido) {
+//            rePe.setRequest(pedido);
+//            Integer cod = rePe.getCodigoProducto();
+//            try {
+//                producto = new ProductoService().getProductoByCodigo(cod);
+//
+//            } catch (Exception ex) {
+//                Logger.getLogger(DuplicadoPedidoFrame.class
+//                        .getName()).log(Level.SEVERE, null, ex);
+//            }
+//            rePe.setCodigoProducto(producto.getCodigo());
+//        }
+//        try {
+//            new RequestService().saveRequestCompleto(pedido, renglonPedido);
+//
+//        } catch (Exception ex) {
+//            Logger.getLogger(DuplicadoPedidoFrame.class
+//                    .getName()).log(Level.SEVERE, null, ex);
+//        }
+        generarPedido();
+        MainFrame ff = new MainFrame();
+        ff.setVisible(true);
+        this.dispose();
+    }
+
+    private void generarPedido() {
+        renglones = new String[maxNro];
+        textoPedidoPapel = "PEDIDO";
+        fechaPedidoPapel = sdf.format(fecha);
+        clientePedidoPapel = razonSocialTxt.getText();
+        codigoClientePedidoPapel = clientePedido.getCodigo();
+        direccionPedidoPapel = clientePedido.getDomicilio().getCalle() + " " + clientePedido.getDomicilio().getNumero() + " - " + clientePedido.getDomicilio().getLocalidad();
+        //cuitPedidoPapel = clientePedido.getCuit();
+        //String condVta = "";
+        Date fechaVto = fecha;
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(fecha);
+        //condVta = "                      ";
+        vencimientoPedidoPapel = sdf.format(fechaVto);
+        String catego = "";
+        if (clientePedido.getCategoriaDeIva().equals(1)) {
+            catego = "Responsable Inscripto       ";
+        }
+        if (clientePedido.getCategoriaDeIva().equals(2)) {
+            catego = "Monotributo                 ";
+        }
+        if (clientePedido.getCategoriaDeIva().equals(3)) {
+            catego = "Exento                      ";
+        }
+        if (clientePedido.getCategoriaDeIva().equals(4)) {
+            catego = "Consumidor Final            ";
+        }
+        //inscripcionClientePedidoPapel = catego;
+//        if (categoriaIva != 1) {
+//            //                                    1         2         3         4         5         6         7         8         9        10
+//            //                           1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+        nombresColumnaPedidoPapel = "  IT CANT                    DETALLE                    P.UNIT.    DESC.   IMPORTE       IMP.     TOTAL     SUG";
+//        } else {
+//            nombresColumnaPedidoPapel = "  IT CANT                    DETALLE                   P.UNIT.    DESC.   GRAVADO      IVA       IMP.    TOTAL      SUG";
+//        }
+        int maxTabla = tablaPedido.getRowCount();
+        for (int r = 0; r < maxNro; r++) {
+            if (r < maxTabla) {
+                String str0 = String.valueOf(r + 1);
+                int largo = str0.length();
+                if (largo < 2) {
+                    renglones[r] = " " + str0;
+                } else {
+                    renglones[r] = str0;
+                }
+                str0 = tablaPedido.getValueAt(r, 1).toString();
+                largo = str0.length();
+                if (largo == 1) {
+                    renglones[r] = " " + renglones[r] + "     " + str0;
+                }
+                if (largo == 2) {
+                    renglones[r] = " " + renglones[r] + "    " + str0;
+                }
+                if (largo == 3) {
+                    renglones[r] = " " + renglones[r] + "   " + str0;
+                }
+                if (largo == 4) {
+                    renglones[r] = " " + renglones[r] + "  " + str0;
+                }
+                if (largo == 5) {
+                    renglones[r] = " " + renglones[r] + " " + str0;
+                }
+                if (largo == 6) {
+                    renglones[r] = renglones[r] + " " + str0;
+                }
+                str0 = tablaPedido.getValueAt(r, 2).toString();
+                String espacio = " ";
+                largo = str0.length();
+                if (largo > 40) {
+                    str0 = str0.substring(0, 40);
+                    tablaPedido.setValueAt(str0, r, 2);
+                }
+                for (int l = largo; l < 40; l++) {
+                    espacio += " ";
+                }
+                renglones[r] = renglones[r] + "  " + tablaPedido.getValueAt(r, 2) + espacio;;
+//                if (categoriaIva != 1) {
+//                  aqui detalle de importes no inscripto en IVA           *****
+// Precio Unitario
+                str0 = tablaPedido.getValueAt(r, 3).toString();
+                str0 = str0.replace(",", ".");
+                Double doble = Double.valueOf(str0);
+                largo = doble.intValue();
+                espacio = "      ";
+                largo = String.valueOf(largo).length();
+                espacio = espacio.substring(largo);
+                renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+// Descuento
+                str0 = tablaPedido.getValueAt(r, 7).toString();
+                str0 = str0.replace(",", ".");
+                doble = Double.valueOf(str0);
+                largo = doble.intValue();
+                espacio = "     ";
+                largo = String.valueOf(largo).length();
+                espacio = espacio.substring(largo);
+                renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+// Importe
+                str0 = tablaPedido.getValueAt(r, 4).toString();
+                str0 = str0.replace(",", ".");
+                Double calculo = Double.valueOf(str0);
+                str0 = tablaPedido.getValueAt(r, 6).toString();
+                str0 = str0.replace(",", ".");
+                calculo += Double.valueOf(str0);
+                str0 = String.valueOf(calculo);
+                doble = Double.valueOf(str0);
+                largo = doble.intValue();
+                espacio = "      ";
+                largo = String.valueOf(largo).length();
+                espacio = espacio.substring(largo);
+                renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+// Impuesto
+                str0 = tablaPedido.getValueAt(r, 5).toString();
+                str0 = str0.replace(",", ".");
+                doble = Double.valueOf(str0);
+                largo = doble.intValue();
+                espacio = "       ";
+                largo = String.valueOf(largo).length();
+                espacio = espacio.substring(largo);
+                renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+//  Total linea
+                str0 = tablaPedido.getValueAt(r, 8).toString();
+                str0 = str0.replace(",", ".");
+                doble = Double.valueOf(str0);
+                largo = doble.intValue();
+                espacio = "      ";
+                largo = String.valueOf(largo).length();
+                espacio = espacio.substring(largo);
+                renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+// Sugerido
+                str0 = tablaPedido.getValueAt(r, 9).toString();
+                str0 = str0.replace(",", ".");
+                doble = Double.valueOf(str0);
+                largo = doble.intValue();
+                espacio = "    ";
+                largo = String.valueOf(largo).length();
+                espacio = espacio.substring(largo);
+                renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+//                } else {
+//                    // aqui detalle importes inscripto
+//// Precio Unitario
+//                    str0 = tablaPedido.getValueAt(r, 3).toString();
+//                    str0 = str0.replace(",", ".");
+//                    Double doble = Double.valueOf(str0);
+//                    largo = doble.intValue();
+//                    espacio = "     ";
+//                    largo = String.valueOf(largo).length();
+//                    espacio = espacio.substring(largo);
+//                    renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+//// Descuento
+//                    str0 = tablaPedido.getValueAt(r, 7).toString();
+//                    str0 = str0.replace(",", ".");
+//                    doble = Double.valueOf(str0);
+//                    largo = doble.intValue();
+//                    espacio = "     ";
+//                    largo = String.valueOf(largo).length();
+//                    espacio = espacio.substring(largo);
+//                    renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+//// Gravado
+//                    str0 = tablaPedido.getValueAt(r, 4).toString();
+//                    str0 = str0.replace(",", ".");
+//                    doble = Double.valueOf(str0);
+//                    largo = doble.intValue();
+//                    espacio = "      ";
+//                    largo = String.valueOf(largo).length();
+//                    espacio = espacio.substring(largo);
+//                    renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+//// Iva
+//                    str0 = tablaPedido.getValueAt(r, 6).toString();
+//                    str0 = str0.replace(",", ".");
+//                    doble = Double.valueOf(str0);
+//                    largo = doble.intValue();
+//                    espacio = "     ";
+//                    largo = String.valueOf(largo).length();
+//                    espacio = espacio.substring(largo);
+//                    renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+//// Impuesto
+//                    str0 = tablaPedido.getValueAt(r, 5).toString();
+//                    str0 = str0.replace(",", ".");
+//                    doble = Double.valueOf(str0);
+//                    largo = doble.intValue();
+//                    espacio = "       ";
+//                    largo = String.valueOf(largo).length();
+//                    espacio = espacio.substring(largo);
+//                    renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+////  Total linea
+//                    str0 = tablaPedido.getValueAt(r, 8).toString();
+//                    str0 = str0.replace(",", ".");
+//                    doble = Double.valueOf(str0);
+//                    largo = doble.intValue();
+//                    espacio = "      ";
+//                    largo = String.valueOf(largo).length();
+//                    espacio = espacio.substring(largo);
+//                    renglones[r] = renglones[r] + espacio + df.format(doble) + " ";
+//// Sugerido
+//                    str0 = tablaPedido.getValueAt(r, 9).toString();
+//                    str0 = str0.replace(",", ".");
+//                    doble = Double.valueOf(str0);
+//                    largo = doble.intValue();
+//                    espacio = "    ";
+//                    largo = String.valueOf(largo).length();
+//                    espacio = espacio.substring(largo);
+//                    renglones[r] = renglones[r] + espacio + df.format(doble);
+//                }
+            } else {
+                // agregar renglon en blanco
+                renglones[r] = " ";
+            }
+        }
+// Saldo Cliente
+        String str0 = String.valueOf(saldoCliente);
+        str0 = str0.replace(",", ".");
+        Double doble = Double.valueOf(str0);
+        int largo = doble.intValue();
+        String espacio = "          ";
+        largo = String.valueOf(largo).length();
+        espacio = espacio.substring(largo);
+        //totalDeudaPedidoPapel = espacio + df.format(doble);
+// Total Pedido
+        str0 = String.valueOf(totalPedido);
+        str0 = str0.replace(",", ".");
+        doble = Double.valueOf(str0);
+        largo = doble.intValue();
+        espacio = "        ";
+        largo = String.valueOf(largo).length();
+        espacio = espacio.substring(largo);
+        importeTotalPedidoPapel = espacio + df.format(doble);
+// Linea Totales
+//        if (categoriaIva != 1) {
+        str0 = String.valueOf(totalImpuesto);
+        str0 = str0.replace(",", ".");
+        doble = Double.valueOf(str0);
+        largo = doble.intValue();
+        espacio = "                                                                            ";
+        largo = String.valueOf(largo).length();
+        espacio = espacio.substring(largo);
+        lineaTotalesPedidoPapel = espacio + df.format(doble);
+//        } else {
+//            str0 = String.valueOf(totalGravado);
+//            str0 = str0.replace(",", ".");
+//            doble = Double.valueOf(str0);
+//            largo = doble.intValue();
+//            espacio = "           ";
+//            largo = String.valueOf(largo).length();
+//            espacio = espacio.substring(largo);
+//            lineaTotalesPedidoPapel = espacio + df.format(doble);
+//            str0 = String.valueOf(totalImpuesto);
+//            str0 = str0.replace(",", ".");
+//            doble = Double.valueOf(str0);
+//            largo = doble.intValue();
+//            espacio = "           ";
+//            largo = String.valueOf(largo).length();
+//            espacio = espacio.substring(largo);
+//            lineaTotalesPedidoPapel += espacio + df.format(doble);
+//            str0 = String.valueOf(totalIva);
+//            str0 = str0.replace(",", ".");
+//            doble = Double.valueOf(str0);
+//            largo = doble.intValue();
+//            espacio = "                                 ";
+//            largo = String.valueOf(largo).length();
+//            espacio = espacio.substring(largo);
+//            lineaTotalesPedidoPapel += espacio + df.format(doble);
+//        }
+// Total a Pagar
+        Double totalPagar = saldoCliente;
+        str0 = String.valueOf(totalPagar);
+        str0 = str0.replace(",", ".");
+        doble = Double.valueOf(str0);
+        largo = doble.intValue();
+        espacio = "          ";
+        largo = String.valueOf(largo).length();
+        espacio = espacio.substring(largo);
+        //totalPagarPedidoPapel = espacio + df.format(doble);
+// Cantidades atados
+        cantidadesPedidoPapel = "                  CANT.ATADOS NOBLEZA: " + String.valueOf(cantidadAtadosNobleza);
+        cantidadesPedidoPapel += "                 CANT ATADOS MASSALIN: " + String.valueOf(cantidadAtadosMassalin);
+        texto1PedidoPapel = texto1PiePedidoTxt.getText();
+        texto2PedidoPapel = texto2PiePedidoTxt.getText();
+        texto3PedidoPapel = "-";
+        PrinterJob pj = PrinterJob.getPrinterJob();
+        PageFormat pf = pj.defaultPage();
+        Paper paper = new Paper();
+        double margin = 8;
+        paper.setImageableArea(margin, margin, paper.getWidth() - margin * 2, paper.getHeight() - margin * 2);
+        pf.setPaper(paper);
+        pj.setPrintable(new MyPrintable(), pf);
+//        if (pj.printDialog()) {
+        try {
+            pj.print();
+        } catch (PrinterException e) {
+            System.out.println(e);
+        }
+//        }
+    }
+
+    private void agregarProducto() {
+//        codigoProductoTxt.setEnabled(true);
+//        codigoBarrasTxt.setEnabled(true);
+//        cantidadTxt.setEnabled(true);
+//        agregarBtn.setEnabled(false);
+//        if (nro > 0) {
+//            terminarBtn.setEnabled(true);
+//        } else {
+//            terminarBtn.setEnabled(false);
+//        }
+//        buscarProductoXNombre.setEnabled(true);
+//        incorporarProductoBtn.setEnabled(true);
+//        nombreProductoABuscar.setEnabled(true);
+//        nombreProductoConsultaTxt.setEnabled(true);
+//        comboProductos.setEnabled(true);
+//        cancelarBtn.setEnabled(true);
+//        nombreProductoABuscar.requestFocus();
+    }
+
+//    private void buscarProducto() {
+//        filtro = "";
+//        if (nro < maxNro - 1) {
+//            agregarBtn.setEnabled(true);
+//        } else {
+//            agregarBtn.setEnabled(false);
+//        }
+//        if (nro > 0) {
+//            terminarBtn.setEnabled(true);
+//        } else {
+//            terminarBtn.setEnabled(false);
+//        }
+//        eliminarItemBtn.setEnabled(true);
+//        cancelarBtn.setEnabled(true);
+//        if (cantidadTxt.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Error - ingrese cantidad");
+//            cantidadTxt.requestFocus();
+//        } else {
+//            Producto pro = null;
+//            encontrado = false;
+//            if (!codigoBarrasTxt.getText().isEmpty()) {
+//                try {
+//                    pro = new ProductoService().getProductoByCodigoBarras(Long.valueOf(codigoBarrasTxt.getText()));
+//                    encontrado = true;
+//
+//                } catch (Exception ex) {
+//                    Logger.getLogger(DuplicadoPedidoFrame.class
+//                            .getName()).log(Level.SEVERE, null, ex);
+//                    codigoBarrasTxt.requestFocus();
+//                }
+//            } else {
+//                if (!codigoProductoTxt.getText().isEmpty()) {
+//                    try {
+//                        pro = new ProductoService().getProductoByCodigo(Integer.valueOf(codigoProductoTxt.getText()));
+//                        encontrado = true;
+//                        leerCantidadBtn.setEnabled(true);
+//                        leerImporteBtn.setEnabled(true);
+//                        nuevaCantidadTxt.setEnabled(true);
+//                        nuevoImporteTxt.setEnabled(true);
+//
+//                    } catch (Exception ex) {
+//                        Logger.getLogger(DuplicadoPedidoFrame.class
+//                                .getName()).log(Level.SEVERE, null, ex);
+//                        codigoBarrasTxt.requestFocus();
+//                    }
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Ingrese Código de Producto o Código de Barras");
+//                    codigoBarrasTxt.requestFocus();
+//                }
+//            }
+//            if (pro != null) {
+//                if (pro.getInactivo() != null) {
+//                    if (!pro.getInactivo()) {
+//                        //if (!(pro.getSubRubro().getCodigo().equals(5099))) {
+//                        cantidad = Float.valueOf(cantidadTxt.getText());
+//                        // en unidad
+//                        if (!(cantidad > 0.0)) {
+//                            JOptionPane.showMessageDialog(this, "Debe colocar cantidad mayor que cero");
+//                            cantidadTxt.requestFocus();
+//                            return;
+//                        }
+//                        DefaultTableModel tabla = (DefaultTableModel) tablaPedido.getModel();
+//                        precioFinal = rint(((pro.getPrecio() * (1 + (porcentualIva / 100))) + pro.getImpuesto()) * 100) / 100;
+//                        // por cantidad
+//                        gravado = rint((pro.getPrecio() * cantidad) * 100) / 100;
+//                        impuesto = rint(pro.getImpuesto() * cantidad * 100) / 100;
+//                        iva = rint(gravado * 21) / 100;
+//                        totalLinea = rint((gravado + impuesto + iva) * 100) / 100;
+//                        RequestRow rf = new RequestRow();
+//                        rf.setCantidad(cantidad);
+//                        rf.setDescripcion(pro.getDetalle());
+//                        rf.setDescuento(0.0);
+//                        rf.setExento(0.0);
+//                        rf.setGravado(gravado);
+//                        rf.setImpuesto(impuesto);
+//                        rf.setIva(iva);
+//                        rf.setNoGravado(noGravado);
+//                        rf.setCodigoProducto(pro.getCodigo());
+//                        rf.setSugerido(pro.getSugerido());
+//                        rf.setTotal(totalLinea);
+//                        nro += 1;
+//                        renglonPedido.add(rf);
+//                        calcularTotales();
+//                        Object[] fila = new Object[10];
+//                        fila[0] = pro.getCodigo();
+//                        fila[1] = cantidadTxt.getText();
+//                        fila[2] = pro.getDetalle();
+//                        fila[3] = df.format(precioFinal);
+//                        fila[4] = df.format(gravado);
+//                        fila[5] = df.format(impuesto);
+//                        fila[6] = df.format(iva);
+//                        fila[7] = df.format(0.0);
+//                        fila[8] = df.format(totalLinea);
+//                        fila[9] = df.format(pro.getSugerido());
+//                        tabla.addRow(fila); // Agrego la fila a la tabla
+//                        Rectangle rect = tablaPedido.getCellRect(nro - 1, 0, true);
+//                        tablaPedido.scrollRectToVisible(rect);
+//                        tablaPedido.clearSelection();
+//                        tablaPedido.setRowSelectionInterval(nro - 1, nro - 1);
+//                        tablaPedido.setModel(tabla); // poner visible la tabla
+//                        codigoProductoTxt.setEnabled(false);
+//                        codigoBarrasTxt.setEnabled(false);
+//                        cantidadTxt.setEnabled(false);
+//                        incorporarProductoBtn.setEnabled(false);
+//                        cantidadTxt.setText("");
+//                        codigoProductoTxt.setText("");
+//                        buscarProductoXNombre.setEnabled(false);
+//                        nombreProductoABuscar.setEnabled(false);
+//                        comboProductos.setEnabled(false);
+//                        texto1PiePedidoTxt.setEnabled(true);
+//                        texto2PiePedidoTxt.setEnabled(true);
+//                        descuentoBtn.setEnabled(true);
+////                        } else {
+////                            JOptionPane.showMessageDialog(this, "Error - producto no disponible");
+////                            codigoProductoTxt.setText("");
+////                            cantidadTxt.setText("");
+////                            nombreProductoABuscar.setText("");
+////                            buscarBtn.setEnabled(false);
+////                            agregarBtn.setEnabled(false);
+////                            codigoBarrasTxt.requestFocus();
+////                        }
+//                    } else {
+//                        JOptionPane.showMessageDialog(this, "Error - producto inactivo");
+//                        codigoProductoTxt.setText("");
+//                        cantidadTxt.setText("");
+//                        buscarBtn.setEnabled(false);
+//                        codigoBarrasTxt.requestFocus();
+//                        //codigoProductoTxt.requestFocus();
+//                    }
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Error - producto inactivo");
+//                    codigoProductoTxt.setText("");
+//                    cantidadTxt.setText("");
+//                    buscarBtn.setEnabled(false);
+//                    codigoBarrasTxt.requestFocus();
+//                    //codigoProductoTxt.requestFocus();
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Error - producto no existe");
+//                codigoProductoTxt.setText("");
+//                codigoBarrasTxt.requestFocus();
+//                //codigoProductoTxt.requestFocus();
+//            }
+//        }
+//        comboProductos.removeAllItems();
+//        comboProductos.addItem("");
+//    }
+    private void borrarTablaProductos() {
+        int cantidadRow = tablaPedido.getRowCount();
+        DefaultTableModel model1 = (DefaultTableModel) tablaPedido.getModel();
+        if (cantidadRow > 0) {
+            for (int i = 0; i < cantidadRow; i++) {
+                model1.removeRow(0);
+            }
+            tablaPedido.setModel(model1);
+            nro = 0;
+        }
+        renglonPedido = new ArrayList<RequestRow>();
+    }
+
+//    private void consultarProducto() {
+//        nombreProductoConsultaTxt.setEnabled(true);
+//        precioProductoConsultaTxt.setEnabled(true);
+//        if (!codigoProductoTxt.getText().isEmpty()) {
+//            Integer codi = Integer.valueOf(codigoProductoTxt.getText());
+//            try {
+//                Producto prod = new ProductoService().getProductoByCodigo(codi);
+//                //if (!(prod.getSubRubro().getCodigo().equals(5099))) {
+//                nombreProductoConsultaTxt.setText(prod.getDetalle());
+//                Double precioProductoConsulta = prod.getPrecio();
+//                precioProductoConsulta += precioProductoConsulta * porcentualIva / 100;
+//                if (prod.getImpuesto() != null) {
+//                    precioProductoConsulta += prod.getImpuesto();
+//                }
+//                precioProductoConsultaTxt.setText(String.valueOf(df.format(precioProductoConsulta)));
+//                cantidadTxt.requestFocus();
+////                } else {
+////                    JOptionPane.showMessageDialog(this, "No existe Producto");
+////                }
+//            } catch (Exception ex) {
+//                JOptionPane.showMessageDialog(this, "No existe Producto");
+//                //Logger.getLogger(PedidoFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                codigoProductoTxt.setText("");
+//                codigoProductoTxt.requestFocus();
+//            }
+//        }
+//    }
+    private void calcularTotales() {
+//        totalGravado = 0.0;
+//        totalIva = 0.0;
+        totalImpuesto = 0.0;
+//        totalDescuen = 0.0;
+        //totalDtoUni = 0.0;
+        totalPedido = 0.0;
+        nro = 0;
+        cantidadAtadosMassalin = 0;
+        cantidadAtadosNobleza = 0;
+        Double importeTotalMassalin = 0.0;
+        Double importeTotalNobleza = 0.0;
+        Double totalCalculo = 0.0;
+        for (RequestRow renFa : renglonPedido) {
+//            totalGravado += renFa.getGravado();
+//            iva = rint(renFa.getGravado() * porcentualIva) / 100;
+//            totalIva += iva;
+            Producto prod;
+            try {
+                prod = new ProductoService().getProductoByCodigo(renFa.getCodigoProducto());
+            } catch (Exception ex) {
+                Logger.getLogger(DuplicadoPedidoFrame.class
+                        .getName()).log(Level.SEVERE, null, ex);
+                return;
+            }
+            if (prod.getRubro().getCodigo().equals(1)) {
+                cantidadAtadosMassalin += renFa.getCantidad().intValue();
+                importeTotalMassalin += renFa.getTotal();
+            }
+            cantidadAtadosMassalinTxt.setText(String.valueOf(cantidadAtadosMassalin));
+            importeMassalinTxt.setText(String.valueOf(df.format(importeTotalMassalin)));
+            if (prod.getRubro().getCodigo().equals(2)) {
+                cantidadAtadosNobleza += renFa.getCantidad().intValue();
+                importeTotalNobleza += renFa.getTotal();
+            }
+//            if (renFa.getDescuento() != null) {
+//                if (renFa.getDescuento() > 0) {
+//                    totalDtoUni += renFa.getDescuento();
+//                }
+//            }
+//            if (tieneDto) {
+//                if (prod.getRubro().getCodigo().equals(5)) {
+//                    totalCalculo += renFa.getTotal();
+//                }
+//            }
+            cantidadAtadosNoblezaTxt.setText(String.valueOf(cantidadAtadosNobleza));
+            importeNoblezaTxt.setText(String.valueOf(df.format(importeTotalNobleza)));
+            
+            totalPedido += renFa.getTotal();
+            nro += 1;
+//            renFa.setItemNro(nro);
+        }
+//        if (tieneDto) {
+//            Double tD0 = totalCalculo * descuento / 100;
+//            String tD1 = df.format(tD0);
+//            totalDescuen = Double.valueOf(tD1.replace(",", "."));
+//            totalGravado -= totalDescuen;
+//        } else {
+//            totalDescuen = 0.0;
+//        }
+//        descuentoVolumenTxt.setText(df.format(totalDescuen));
+        cantidadItemsTxt.setText(String.valueOf(nro));
+        totalPedido = pedido.getTotal();
+        totalImpuesto = pedido.getImpuesto();
+//        totalTxt.setText(String.valueOf(df.format(totalPedido)));
+//        totalDeudaTxt.setText(df.format(saldoCliente + totalPedido));
+    }
+
+//    private void consultarProductoBarras() {
+//        nombreProductoConsultaTxt.setEnabled(true);
+//        precioProductoConsultaTxt.setEnabled(true);
+//        if (!codigoBarrasTxt.getText().isEmpty()) {
+//            Long codigoBarras = Long.valueOf(codigoBarrasTxt.getText());
+//            try {
+//                Producto prod = new ProductoService().getProductoByCodigoBarras(codigoBarras);
+//                nombreProductoConsultaTxt.setText(prod.getDetalle());
+//                Double precioProductoConsulta = prod.getPrecio();
+//                precioProductoConsulta += precioProductoConsulta * porcentualIva / 100;
+//                if (prod.getImpuesto() != null) {
+//                    precioProductoConsulta += prod.getImpuesto();
+//                }
+//                precioProductoConsultaTxt.setText(String.valueOf(df.format(precioProductoConsulta)));
+//                cantidadTxt.requestFocus();
+//            } catch (Exception ex) {
+//                JOptionPane.showMessageDialog(this, "No existe Producto");
+//                //Logger.getLogger(PedidoFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                codigoProductoTxt.setText("");
+//                codigoBarrasTxt.setText("");
+//                codigoProductoTxt.requestFocus();
+//
+//            }
+//        }
+//    }
+//    private void leerImporte() {
+//        int lin = tablaPedido.getSelectedRow();
+//        if (lin > -1) {
+//            RequestRow rf = renglonPedido.get(lin);
+//            int cod = rf.getCodigoProducto();
+//            Producto pro = null;
+//            try {
+//                pro = new ProductoService().getProductoByCodigo(cod);
+//
+//            } catch (Exception ex) {
+//                Logger.getLogger(DuplicadoPedidoFrame.class
+//                        .getName()).log(Level.SEVERE, null, ex);
+//            }
+//            int codRub = pro.getRubro().getCodigo();
+//            if (codRub < 3) {
+//                JOptionPane.showMessageDialog(this, "No puede modificar Precio de este producto");
+//                leerImporteBtn.setEnabled(true);
+//                grabarImporteBtn.setEnabled(false);
+//                leerCantidadBtn.setEnabled(true);
+//                agregarBtn.requestFocus();
+//                return;
+//            }
+//            Float cant = rf.getCantidad();
+//            Double iva = rf.getIva() / cant;
+//            Double prec = rf.getGravado() / cant;
+//            nuevoImporteTxt.setEnabled(true);
+//            nuevoImporteTxt.setText(String.valueOf(df.format(prec + iva)));
+//            leerImporteBtn.setEnabled(false);
+//            grabarImporteBtn.setEnabled(true);
+//            leerCantidadBtn.setEnabled(false);
+//            tablaPedido.setEnabled(false);
+//            agregarBtn.setEnabled(false);
+//            eliminarItemBtn.setEnabled(false);
+//            terminarBtn.setEnabled(false);
+//            nuevaCantidadTxt.setEnabled(false);
+//            nuevoImporteTxt.requestFocus();
+//        }
+//    }
+    private boolean habilitado() {
+        FileReader fr = null;
+        try {
+            fr = new FileReader("c:/ventas/permisos.txt");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FacturaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        BufferedReader br = new BufferedReader(fr);
+        String acceso = "";
+        try {
+            acceso = br.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(FacturaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(FacturaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (acceso.equals("1")) {
+            return true;
+        }
+        habilitar();
+        if (usuario != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void habilitar() {
+        usuario = null;
+        JTextField field = new JTextField("");
+        String[] options = {"Ingresar"};
+        int result = JOptionPane.showOptionDialog(
+                null,
+                field,
+                "Autorización de USUARIO",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                0);
+        if (field.getText().isEmpty()) {
+            usuario = null;
+            return;
+        }
+        switch (result) {
+            case 0:
+                int cod = Integer.valueOf(field.getText());
+                try {
+                    usuario = new UsuarioService().getUsuarioByCodigo(cod);
+                } catch (Exception ex) {
+                    Logger.getLogger(FacturaFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (usuario != null) {
+                    if (usuario.getActivo()) {
+                        JPasswordField field2 = new JPasswordField("");
+                        String[] opts = {"Ingresar"};
+                        int resulta = JOptionPane.showOptionDialog(
+                                null,
+                                field2,
+                                "CONTRASEÑA: " + usuario.getNombre() + ", Autorización",
+                                JOptionPane.OK_CANCEL_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                opts,
+                                0);
+                        switch (resulta) {
+                            case 0:
+                                int contra = Integer.valueOf(new String(field2.getPassword()));
+                                if (contra == usuario.getContrasena()) {
+                                    if (usuario.getNivel() > nivel) {
+                                        JOptionPane.showMessageDialog(this, "Usuario no Habilitado");
+                                        usuario = null;
+                                    } else {
+                                        String f1 = sdf.format(usuario.getFecha());
+                                        String f2 = sdf.format(new Date());
+                                        if (usuario.getNivel() == 2) {
+                                            if (!f1.equals(f2)) {
+                                                JOptionPane.showMessageDialog(this, "Permiso de Usuario Vencido");
+                                                usuario = null;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+                                    usuario = null;
+                                }
+                                break;
+                            case 1:
+                                usuario = null;
+                                break;
+                            case -1:
+                                usuario = null;
+                                break;
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "USUARIO Inactivo");
+                        usuario = null;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No existe el Usuario");
+                    usuario = null;
+                }
+                break;
+            case 1:
+                usuario = null;
+                break;
+            case -1:
+                usuario = null;
+                break;
+        }
+    }
+
+    private void llenarCampos() {
+        customerPedido = pedido.getCliente();
+        codigoTxt.setText(String.valueOf(customerPedido.getCodigo()));
+        String c = customerPedido.getCodigo();
+        clientePedido = null;
+        try {
+            clientePedido = new ClienteService().getClienteByCodigo(c);
+        } catch (Exception ex) {
+            Logger.getLogger(DuplicadoPedidoFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (clientePedido != null) {
+            razonSocialTxt.setText(clientePedido.getRazonSocial());
+            if (clientePedido.getCategoriaDeIva() != null) {
+                if (clientePedido.getCategoriaDeIva() == 1) {
+                    ivaTxt.setText("Resp. Inscripto");
+                }
+                if (clientePedido.getCategoriaDeIva() == 2) {
+                    ivaTxt.setText("Monotributo");
+                }
+                if (clientePedido.getCategoriaDeIva() == 4) {
+                    ivaTxt.setText("Consumidor Final");
+                }
+            } else {
+                ivaTxt.setText("Consumidor Final");
+            }
+        }
+        fechaTxt.setText(sdf.format(pedido.getFecha()));
+        fecha = pedido.getFecha();
+        if (pedido.getPorcentualDescuentoGlobal() != null) {
+            descuentoGlobalTxt.setText(df1.format(pedido.getPorcentualDescuentoGlobal()));
+            descuento = pedido.getPorcentualDescuentoGlobal();
+            descuentoVolumenTxt.setText(df.format(pedido.getDescuentoGlobal()));
+            totalDescuen = pedido.getDescuentoGlobal();
+        } else {
+            descuentoGlobalTxt.setText(df1.format(0));
+            descuentoVolumenTxt.setText(df.format(0));
+        }
+        if (pedido.getTextoPiePedido1() != null) {
+            texto1PiePedidoTxt.setText(pedido.getTextoPiePedido1());
+        } else {
+            texto1PiePedidoTxt.setText("");
+        }
+        if (pedido.getTextoPiePedido2() != null) {
+            texto2PiePedidoTxt.setText(pedido.getTextoPiePedido2());
+        } else {
+            texto2PiePedidoTxt.setText("");
+        }
+        if(pedido.getDescuentoGlobal() != null){
+            if(pedido.getDescuentoGlobal() > 0){
+                tieneDto = true;
+            }else{
+                tieneDto = false;
+            }
+        }else{
+            tieneDto = false;
+        }
+        totalTxt.setText(df.format(pedido.getTotal()));
+        renglonPedido = null;
+        try {
+            renglonPedido = new RequestRowService().getAllRenglonRequestFromRequest(pedido);
+        } catch (Exception ex) {
+            Logger.getLogger(DuplicadoPedidoFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(renglonPedido != null && !renglonPedido.isEmpty()){
+            DefaultTableModel tbl = (DefaultTableModel) tablaPedido.getModel();
+            DecimalFormat df2 = new DecimalFormat("#0");
+            for(RequestRow r:renglonPedido){
+                Object o[] = new Object[10];
+                o[0] = r.getCodigoProducto();
+                o[1]=df2.format(r.getCantidad());
+                int co = r.getCodigoProducto();
+                Producto p = null;
+                try {
+                    p = new ProductoService().getProductoByCodigo(co);
+                } catch (Exception ex) {
+                    Logger.getLogger(DuplicadoPedidoFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                o[2]=p.getDetalle();
+                o[3]=df.format(r.getTotal()/r.getCantidad());
+                o[4]=df.format(r.getGravado());
+                o[5]=df.format(r.getImpuesto());
+                o[6]=df.format(r.getIva());
+                o[7]=df.format(r.getDescuento());
+                o[8]=df.format(r.getTotal());
+                o[9]=df.format(r.getSugerido());
+                tbl.addRow(o);
+            }
+            tablaPedido.setModel(tbl);
+            calcularTotales();
+        }
+    }
+
+    private void volver() {
+        MainFrame mf = new MainFrame();
+        mf.setVisible(true);
+        this.dispose();
+    }
+
+    class MyPrintable implements Printable {
+
+        public int print(Graphics g, PageFormat pf, int pageIndex) {
+            if (pageIndex != 0) {
+                return NO_SUCH_PAGE;
+            }
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setFont(new Font("Monospaced", Font.PLAIN, 8));
+            g2.setPaint(Color.black);
+            int row = 45;
+            //                1234567890123456789012345678901234567890123456789012345678901234567890
+            String espacio = "                                                         ";
+            g2.drawString(espacio + textoPedidoPapel, 30, row);
+            row += 25;
+            //         123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+            espacio = "                                                                           ";
+            g2.drawString(espacio + fechaPedidoPapel, 30, row);
+            espacio = "            ";
+            row += 50;
+            g2.drawString(espacio + clientePedidoPapel, 30, row);
+            g2.drawString(codigoClientePedidoPapel, 480, row);
+            row += 15;
+            espacio = "            ";
+            g2.drawString(espacio + direccionPedidoPapel, 30, row);
+            row += 15;
+            g2.drawString("--", 100, row);
+            g2.drawString("--", 360, row);
+            row += 25;
+            g2.drawString("Ref.Interna:" + letraPedido + " " + numeroPedido, 150, row);
+            //g2.drawString(condicionVentaPedidoPapel, 150, row);
+            g2.drawString(vencimientoPedidoPapel, 400, row);
+            row += 25;
+            g2.drawString(nombresColumnaPedidoPapel, 30, row);
+            row += 15;
+            for (int x = 0; x < maxNro; x++) {
+                if (renglones[x] != null) {
+                    g2.drawString(renglones[x], 40, row);
+                }
+                row += 10;
+            }
+            row += 20;
+            if (tieneDto) {
+                g2.drawString("Descuento: " + descuento + "% Total descuento: " + df.format(totalDescuen), 30, row);
+            }
+            row += 20;
+            g2.drawString(lineaTotalesPedidoPapel, 30, row);
+            g2.setFont(new Font("Monospaced", Font.BOLD, 11));
+            g2.drawString(importeTotalPedidoPapel, 490, row);
+            g2.setFont(new Font("Monospaced", Font.PLAIN, 9));
+            row += 21;
+            //g2.drawString("SALDO ANTERIOR: " + totalDeudaPedidoPapel, 403, row);
+            //row += 10;
+            //g2.drawString("SALDO TOTAL:    " + totalPagarPedidoPapel, 403, row);
+            row += 10;
+            espacio = "     ";
+            g2.setFont(new Font("Monospaced", Font.BOLD, 9));
+            g2.drawString(espacio + texto1PedidoPapel, 30, row);
+            row += 10;
+            g2.drawString(espacio + texto2PedidoPapel, 30, row);
+            row += 10;
+            g2.drawString(espacio + texto3PedidoPapel, 30, row);
+            g2.setFont(new Font("Monospaced", Font.PLAIN, 9));
+            row += 15;
+//            g2.drawString(espacio + texto4PedidoPapel, 30, row);
+//            row += 20;
+            g2.drawString(cantidadesPedidoPapel, 30, row);
+            return PAGE_EXISTS;
+        }
+    }
+}

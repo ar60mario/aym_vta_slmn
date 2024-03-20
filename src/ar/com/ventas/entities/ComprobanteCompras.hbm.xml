@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.ComprobanteCompras" schema="ventas" table="comprobante_compras">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="fechaPeriodo" type="date" column="FECHA_PERIODO"/>
+        <property name="fechaFactura" type="date" column="FECHA_FACTURA"/>
+        <property name="fechaEntrega" type="date" column="FECHA_ENTREGA"/>
+        <property name="tipoComprobante" type="string" column="TIPO_COMPROBANTE"/>
+        <property name="letra" type="string" column="LETRA"/>
+        <property name="numeroSucursal" type="integer" column="NUMERO_SUCURSAL"/>
+        <property name="numeroFactura" type="integer" column="NUMERO_FACTURA"/>
+        <property name="gravado" type="double" column="GRAVADO"/>
+        <property name="noGravado" type="double" column="NO_GRAVADO"/>
+        <property name="impuestoInterno" type="double" column="IMPUESTO_INTERNO"/>
+        <property name="percepcionIiBb" type="double" column="PERCEPCION_II_BB"/>
+        <property name="percepcionIva" type="double" column="PERCEPCION_IVA"/>
+        <property name="otro" type="double" column="OTRO"/>
+        <property name="iva" type="double" column="IVA"/>
+        <property name="total" type="double" column="TOTAL"/>
+        <property name="pagado" type="double" column="PAGADO"/>
+        <property name="esDebito" type="boolean" column="ES_DEBITO"/>
+        <property name="prontoPago" type="boolean" column="PRONTO_PAGO"/>
+        <property name="enLibro" type="boolean" column="EN_LIBRO"/>
+        <property name="estaPago" type="boolean" column="ESTA_PAGO"/>
+        <property name="tieneDetalle" type="boolean" column="TIENE_DETALLE"/>
+        <property name="diasVencimiento" type="integer" column="DIAS_VENCIMIENTO"/>
+        <property name="fechaCalculoVencimiento" type="date" column="FECHA_CALCULO_VENCIMIENTO"/>
+        <many-to-one name="proveedor"
+                    class="ar.com.ventas.entities.Proveedor"
+                     lazy="false">
+                     <column name="ID_PROVEEDOR" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

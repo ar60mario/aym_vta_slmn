@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.Routines" schema="sakila" table="routines">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="iva" type="float" column="IVA"/>
+        <property name="sucursal" type="integer" column="SUCURSAL"/>
+        <property name="numeroFactura" type="integer" column="NUMERO_FACTURA"/>
+        <property name="numeroRecibo" type="integer" column="NUMERO_RECIBO"/>
+        <property name="numeroPedido" type="integer" column="NUMERO_PEDIDO"/>
+        <property name="cantidadFacturas" type="integer" column="CANTIDAD_FACTURAS"/>
+        <property name="cantidadPedidos" type="integer" column="CANTIDAD_PEDIDOS"/>
+        <property name="cantidadNotasCredito" type="integer" column="CANTIDAD_NOTAS_CREDITO"/>
+        <property name="cantidadRecibos" type="integer" column="CANTIDAD_RECIBOS"/>
+        <property name="ultimaFechaCierre" type="date" column="ULTIMA_FECHA_CIERRE"/>
+        <property name="ultimaFechaSistema" type="date" column="ULTIMA_FECHA_SISTEMA"/>
+        <property name="cajaAnteriorCerrada" type="boolean" column="CAJA_ANTERIOR_CERRADA"/>
+    </class>
+</hibernate-mapping>

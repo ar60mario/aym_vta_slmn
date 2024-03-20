@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.SeguimientoCompras" schema="ventas" table="seguimiento_compras">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="fecha" type="date" column="FECHA"/>
+        <property name="stock" type="boolean" column="STOCK"/>
+        <property name="llevaStock" type="boolean" column="LLEVA_STOCK"/>
+        <property name="pago" type="boolean" column="PAGO"/>
+        <many-to-one name="comprobante"
+                    class="ar.com.ventas.entities.ComprobanteCompras"
+                     lazy="false">
+                     <column name="ID_COMPROBANTE" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

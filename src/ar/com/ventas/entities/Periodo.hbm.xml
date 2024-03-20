@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.Periodo" schema="ventas" table="periodo">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="detalle" type="string" column="DETALLE"/>
+        <property name="mes" type="integer" column="MES"/>
+        <property name="anio" type="integer" column="ANIO"/>
+        <property name="desdeFecha" type="date" column="DESDE_FECHA"/>
+        <property name="hastaFecha" type="date" column="HASTA_FECHA"/>
+        <property name="cerrado" type="boolean" column="CERRADO"/>
+    </class>
+</hibernate-mapping>

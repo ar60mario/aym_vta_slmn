@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.RcCo" schema="ventas" table="rc_co">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="importeFc" type="double" column="IMPORTE_FC"/>
+        <property name="importeRc" type="double" column="IMPORTE_RC"/>
+        <property name="importeNc" type="double" column="IMPORTE_NC"/>
+        <property name="imputadoFc" type="double" column="IMPUTADO_FC"/>
+        <property name="imputadoRc" type="double" column="IMPUTADO_RC"/>
+        <property name="imputadoNc" type="double" column="IMPUTADO_NC"/>
+        <property name="anulado" type="boolean" column="ANULADO"/>
+        <many-to-one name="reciboProveedor"
+                     class="ar.com.ventas.entities.ReciboProveedor"
+                     lazy="false">
+                     <column name="ID_RCIBO_PROVEEDOR" not-null="false"/>
+        </many-to-one>
+        <many-to-one name="comprobanteCompras"
+                     class="ar.com.ventas.entities.ComprobanteCompras"
+                     lazy="false">
+                     <column name="ID_COMPROBANTE_COMPRAS" not-null="false"/>
+        </many-to-one>
+        <many-to-one name="notaCredito"
+                     class="ar.com.ventas.entities.ComprobanteCompras"
+                     lazy="false">
+                     <column name="ID_NOTA_CREDITO" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

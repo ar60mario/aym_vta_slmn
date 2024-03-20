@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ar.com.ventas.entities.HistorialPrecio" schema="ventas" table="historial_precio">
+        <id name="id" column="ID">
+            <generator class="identity"/>
+        </id>
+        <property name="fecha" type="date" column="FECHA"/>
+        <property name="nombre" type="string" column="NOMBRE"/>
+        <property name="precio" type="double" column="PRECIO"/>
+        <many-to-one name="producto"
+                    class="ar.com.ventas.entities.Producto"
+                     lazy="false">
+                     <column name="ID_PRODUCTO" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
