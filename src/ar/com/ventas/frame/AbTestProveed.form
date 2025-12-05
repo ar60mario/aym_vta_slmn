@@ -35,22 +35,19 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="codigoChekTxt" min="-2" pref="61" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="codigoCalcularTxt" min="-2" pref="51" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="chekBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="26" pref="218" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="codigoChekTxt" min="-2" pref="61" max="-2" attributes="0"/>
+                          <Component id="chekBtn" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="codigoProveedorTxt" max="32767" attributes="0"/>
                           <Component id="arreglarCtaBtn" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="clientesDuplicadosBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -66,16 +63,15 @@
                                   <Component id="verificarNcEnCtaCteBtn" min="-2" max="-2" attributes="0"/>
                                   <Component id="ctaCteClientesBtn" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="calcularCtaBtn" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="codigoCalcularTxt" alignment="0" min="-2" pref="51" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                              <Component id="vencimientoEnCombrasBtn" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="calculoCierreCajaBtn" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="60" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="clientesDuplicadosBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="vencimientoEnCombrasBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -102,12 +98,15 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="tstCmpbteBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="verificarNcEnCtaCteBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="vencimientoEnCombrasBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="verificarCtaCteEnNcBtn" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="verificarCtaCteEnNcBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="vencimientoEnCombrasBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="calculoCierreCajaBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -241,6 +240,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vencimientoEnCombrasBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="calculoCierreCajaBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Calcula cierre caja a Fecha"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calculoCierreCajaBtnActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

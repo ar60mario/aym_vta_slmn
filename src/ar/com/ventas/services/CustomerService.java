@@ -63,6 +63,20 @@ public class CustomerService {
         return customers;
     }
 
+    public List<Customer> getAllClientesActivos() throws Exception {
+        List<Customer> customers = null;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            customers = new CustomerBO().getAllClientesActivos();
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+            throw new Exception(ex);
+        }
+        return customers;
+    }
+    
     public void updateCustomer(Customer customer) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = session.beginTransaction();

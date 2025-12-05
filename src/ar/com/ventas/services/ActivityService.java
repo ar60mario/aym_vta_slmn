@@ -175,6 +175,20 @@ public class ActivityService {
         return activity;
     }
     
+    public List<Activity> getFacturasByIdBetween(Long de, Long al) throws Exception {
+        List<Activity> activity = null;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            activity = new ActivityBO().getFacturasByIdBetween(de, al);
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+            throw new Exception(ex);
+        }
+        return activity;
+    }
+    
     public List<Activity> getFcByFecha(Date fecha) throws Exception {
         List<Activity> activity = null;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.dao;
 
 import ar.com.ventas.entities.Customer;
@@ -65,6 +60,15 @@ public class CustomerDAO extends GenericDAO {
         return clientes;
     }
 
+    public List<Customer> getAllClientesActivos() {
+        List<Customer> clientes = null;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Criteria criteria = session.createCriteria(Customer.class);
+        criteria.add(Restrictions.eq("activo", true));
+        clientes = (List<Customer>) criteria.list();
+        return clientes;
+    }
+    
     public List<Customer> getAllClientesConSaldo() {
 //        List<Customer> clientes = null;
 //        Session session = HibernateUtil.getSessionFactory().getCurrentSession();

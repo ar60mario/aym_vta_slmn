@@ -105,6 +105,17 @@ public class ActivityBO {
         return activity;
     }
 
+    public List<Activity> getFacturasByIdBetween(Long de, Long al) throws Exception {
+        List<Activity> listActivity = null;
+        try {
+            listActivity = dao.getFacturasByIdBetween(de, al);
+        } catch (HibernateException ex) {
+            throw new Exception(ex);
+        }
+        return listActivity;
+    }
+    
+        
     public Activity getFacturaByNumero(String letra, Integer sucursal, Integer numero) throws Exception {
         Activity activity = null;
         try {

@@ -6,6 +6,7 @@
 package ar.com.ventas.frame;
 
 import ar.com.ventas.entities.Activity;
+import ar.com.ventas.entities.Configuracion;
 import ar.com.ventas.entities.CtaCteCliente;
 import ar.com.ventas.entities.Inventory;
 import ar.com.ventas.entities.IvaVentas;
@@ -13,6 +14,7 @@ import ar.com.ventas.entities.Routines;
 import ar.com.ventas.entities.Stores;
 import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.ActivityService;
+import ar.com.ventas.services.ConfiguracionService;
 import ar.com.ventas.services.CtaCteClienteService;
 import ar.com.ventas.services.InventoryService;
 import ar.com.ventas.services.IvaVentasService;
@@ -702,10 +704,14 @@ public class VerificarCajasFrame extends javax.swing.JFrame {
         if (a == 0) {
             Stores caja = cajas.get(row);
             Routines config = null;
+            Configuracion config1 = null;
             try {
                 config = new RoutinesService().getFacturas(1L);
+                config1 = new ConfiguracionService().getFacturas(1L);
             } catch (Exception ex) {
                 Logger.getLogger(VerificarCajasFrame.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "ERROR 709 - CONFIGURACION");
+                return;
             }
             if (config != null) {
                 Date uf1 = config.getUltimaFechaCierre();
@@ -718,12 +724,16 @@ public class VerificarCajasFrame extends javax.swing.JFrame {
                 System.out.println(uf3);
                 System.out.println(f1.equals(f2));
                 //System.exit(0);
-                if(f1.equals(f2)){
+                if (f1.equals(f2)) {
                     config.setUltimaFechaCierre(uf3);
+                    config1.setUltimaFechaCierre(uf3);
                     try {
                         new RoutinesService().updateRoutines(config);
+                        new ConfiguracionService().updateConfiguracion(config1);
                     } catch (Exception ex) {
                         Logger.getLogger(VerificarCajasFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(this, "ERROR 731 - CONFIGURACION");
+                        return;
                     }
                 }
                 try {

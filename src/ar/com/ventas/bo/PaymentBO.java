@@ -1,27 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.bo;
 
 import ar.com.ventas.dao.PaymentDAO;
 import ar.com.ventas.entities.Payment;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 
-/**
- *
- * @author Mario
- */
 public class PaymentBO {
     
     private final PaymentDAO dao = new PaymentDAO();
     private static final Logger logger = Logger.getLogger("PaymentBO");
     
     public Payment savePayment(Payment payment) throws Exception{
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        Integer hora = cal.get(Calendar.HOUR_OF_DAY);
+        Integer minuto = cal.get(Calendar.MINUTE);
+        Integer segundo = cal.get(Calendar.SECOND);
+        payment.setHora(hora);
+        payment.setMinuto(minuto);
+        payment.setSegundo(segundo);
         try{
           dao.save(payment);            
         }catch(HibernateException ex){

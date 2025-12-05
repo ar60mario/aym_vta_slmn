@@ -10,6 +10,9 @@
         <property name="fecha" type="date" column="FECHA"/>
         <property name="numero" type="integer" column="NUMERO"/>
         <property name="importe" type="double" column="IMPORTE"/>
+        <property name="hora" type="integer" column="HORA"/>
+        <property name="minuto" type="integer" column="MINUTO"/>
+        <property name="segundo" type="integer" column="SEGUNDO"/>
         <property name="visto" type="integer" column="VISTO"/>
         <many-to-one name="cliente"
                     class="ar.com.ventas.entities.Cliente"

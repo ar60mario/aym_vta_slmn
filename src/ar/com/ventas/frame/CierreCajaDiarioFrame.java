@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.frame;
 
 import ar.com.ventas.entities.Activity;
 import ar.com.ventas.entities.Cliente;
 import ar.com.ventas.entities.Configuracion;
+import ar.com.ventas.entities.CtaCteCliente;
 import ar.com.ventas.entities.Customer;
 import ar.com.ventas.entities.Dia;
+import ar.com.ventas.entities.Inventory;
 import ar.com.ventas.entities.IvaVentas;
 import ar.com.ventas.entities.Payment;
 import ar.com.ventas.entities.Recibo;
@@ -20,7 +17,9 @@ import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.ActivityService;
 import ar.com.ventas.services.ClienteService;
 import ar.com.ventas.services.ConfiguracionService;
+import ar.com.ventas.services.CtaCteClienteService;
 import ar.com.ventas.services.CustomerService;
+import ar.com.ventas.services.InventoryService;
 import ar.com.ventas.services.IvaVentasService;
 import ar.com.ventas.services.PaymentService;
 import ar.com.ventas.services.ReciboProveedorService;
@@ -74,7 +73,6 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
     private Double saldosInactivosAnteriorOF = 0.0;
     private Double saldosInactivosHoyCF = 0.0;
     private Double saldosInactivosHoyOF = 0.0;
-    
 
     /**
      * Creates new form CierreCajaDiarioFrame
@@ -86,6 +84,7 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
         getContentPane().setBackground(new java.awt.Color(245, 222, 179));
         this.setLocationRelativeTo(null);
         this.opcion = opcion;
+        calcular2Btn.setVisible(false);
         limpiarCampos();
     }
 
@@ -153,6 +152,7 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         saldosInactivosHoyOfTxt = new javax.swing.JTextField();
         devolucionesTxt = new javax.swing.JTextField();
+        calcular2Btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("CIERRE DE CAJA DIARIO");
@@ -325,6 +325,13 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
                 devolucionesTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
                 devolucionesTxt.setText("DEVOLUCIONES");
 
+                calcular2Btn.setText("Calcular2");
+                calcular2Btn.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        calcular2BtnActionPerformed(evt);
+                    }
+                });
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 getContentPane().setLayout(layout);
                 layout.setHorizontalGroup(
@@ -404,7 +411,10 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
                                             .addComponent(buscarBtn)
                                             .addComponent(cerradoCbx)
                                             .addComponent(volverBtn)
-                                            .addComponent(salirBtn))))
+                                            .addComponent(salirBtn)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(calcular2Btn)
+                                        .addGap(74, 74, 74)))
                                 .addGap(22, 22, 22))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel23)
@@ -444,7 +454,8 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
-                            .addComponent(saldosInactivosAnteriorOfTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(saldosInactivosAnteriorOfTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(calcular2Btn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
@@ -515,20 +526,27 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_buscarBtnActionPerformed
 
     private void guardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarBtnActionPerformed
+//        JOptionPane.showMessageDialog(this, "TEST", "atentione", 0);
+        JOptionPane.showMessageDialog(this, "GUARDE LA CAJA SOLAMENTE SI ES EL\nULTIMO MOVIMIENTO DEL DIA\n"
+                + "SI ES UNA CONSULTA ELIJA NO EN LA VENTANA SIGUIENTE");
         int escape = JOptionPane.showConfirmDialog(null, "CONFIRMA CIERRE DE CAJA?\n"
                 + "RECUERDE QUE REALIZARA UN BACKUP PRIMERO",
                 "CIERRE DE CAJA",
                 JOptionPane.YES_NO_OPTION);
-        if (escape == 0) {
-            backup();
-            guardarCaja();
+        if (escape == -1) {
+            JOptionPane.showMessageDialog(this, "NO SELECCIONÓ UNA OPCION\nNO SE GUARDARA EL "
+                    + "CIERRE DE CAJA");
+//            volver();
+        } else {
+            if (escape == 0) {
+                backup();
+                guardarCaja();
+            }
         }
     }//GEN-LAST:event_guardarBtnActionPerformed
 
     private void volverBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverBtnActionPerformed
-        MainFrame mf = new MainFrame();
-        mf.setVisible(true);
-        this.dispose();
+        volver();
     }//GEN-LAST:event_volverBtnActionPerformed
 
     private void calcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularBtnActionPerformed
@@ -538,6 +556,10 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
     private void salirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirBtnActionPerformed
         salir();
     }//GEN-LAST:event_salirBtnActionPerformed
+
+    private void calcular2BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcular2BtnActionPerformed
+        calcular2(0);
+    }//GEN-LAST:event_calcular2BtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -577,6 +599,7 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscarBtn;
     private javax.swing.JTextField cajaInicialTxt;
+    private javax.swing.JButton calcular2Btn;
     private javax.swing.JButton calcularBtn;
     private javax.swing.JCheckBox cerradoCbx;
     private javax.swing.JTextField depositosEfectivoTxt;
@@ -640,6 +663,8 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
             conf = new RoutinesService().getFacturas(1L);
         } catch (Exception ex) {
             Logger.getLogger(CierreCajaDiarioFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "ERROR 641 - CONFIGURACION (S)");
+            return;
         }
         if (conf.getUltimaFechaSistema() != null) {
             fecha = conf.getUltimaFechaSistema();
@@ -688,6 +713,7 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
         saldosInactivosAnteriorCfTxt.setText("");
         saldosInactivosHoyCfTxt.setText("");
         if (opcion == 1) {
+            // viene de Main
             calcular(opcion);
             buscarBtn.setVisible(true);
             volverBtn.setVisible(true);
@@ -716,6 +742,10 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
                 Logger.getLogger(CierreCajaDiarioFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (caja != null) {
+                Date fechaStore = caja.getFecha();
+//                if(fecha.equals(fechaStore)){
+//                    JOptionPane.showMessageDialog(this, "GUARDA NUEVAMENTE EL CIERRE?");
+//                }
                 fechaA = caja.getFechaAnterior();
                 totalFacturado = caja.getTotalFacturadoCf();
                 totalFacOf = caja.getTotalFacturadoOf();
@@ -758,24 +788,24 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
                 } else {
                     cerradoCbx.setSelected(false);
                 }
-                if(caja.getSaldosInactivosAnteriorCf() != null){
+                if (caja.getSaldosInactivosAnteriorCf() != null) {
                     saldosInactivosAnteriorCfTxt.setText(df.format(caja.getSaldosInactivosAnteriorCf()));
-                }else{
+                } else {
                     saldosInactivosAnteriorCfTxt.setText(df.format(0.0));
                 }
-                if(caja.getSaldosInactivosAnteriorOf() != null){
+                if (caja.getSaldosInactivosAnteriorOf() != null) {
                     saldosInactivosAnteriorOfTxt.setText(df.format(caja.getSaldosInactivosAnteriorOf()));
-                }else{
+                } else {
                     saldosInactivosAnteriorOfTxt.setText(df.format(0.0));
                 }
-                if(caja.getSaldosInactivosHoyCf() != null){
+                if (caja.getSaldosInactivosHoyCf() != null) {
                     saldosInactivosHoyCfTxt.setText(df.format(caja.getSaldosInactivosHoyCf()));
-                }else{
+                } else {
                     saldosInactivosHoyCfTxt.setText(df.format(0.0));
                 }
-                if(caja.getSaldosInactivosHoyOf() != null){
+                if (caja.getSaldosInactivosHoyOf() != null) {
                     saldosInactivosHoyOfTxt.setText(df.format(caja.getSaldosInactivosHoyOf()));
-                }else{
+                } else {
                     saldosInactivosHoyOfTxt.setText(df.format(0.0));
                 }
             } else {
@@ -883,9 +913,17 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
         }
 
         JOptionPane.showMessageDialog(this, "Movimiento Guardado correctamente");
-        MainFrame mf = new MainFrame();
-        mf.setVisible(true);
-        this.dispose();
+        volver();
+    }
+
+    private void calcular2(Integer opc) {
+        Date dt0 = new Date();
+        String fechaFrame = sdf.format(dt0); // ;
+        if (fechaTxt.getText().equals(fechaFrame)) {
+            buscarDeudoresOfCfhoy();
+
+        }
+
     }
 
     private void calcular(Integer opc) {
@@ -902,7 +940,7 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
         saldosInactivosAnteriorOF = 0.0;
         saldosInactivosHoyCF = 0.0;
         saldosInactivosHoyOF = 0.0;
-        
+
         try {
             fecha = sdf.parse(fechaTxt.getText());
         } catch (ParseException ex) {
@@ -926,24 +964,23 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
             subTotalIngresos += deudoresAnteriorOf;
             saldoDeudCfTxt.setText(String.valueOf(df.format(deudoresAnteriorCf)));
             saldoDeuOfAnteriorTxt.setText(String.valueOf(df.format(deudoresAnteriorOf)));
-            if(movim.getSaldosInactivosHoyCf() != null){
+            if (movim.getSaldosInactivosHoyCf() != null) {
                 saldosInactivosAnteriorCfTxt.setText(df.format(movim.getSaldosInactivosHoyCf()));
                 saldosInactivosAnteriorCF = movim.getSaldosInactivosHoyCf();
-            }else{
+            } else {
                 saldosInactivosAnteriorCfTxt.setText(df.format(0.0));
             }
-            if(movim.getSaldosInactivosHoyOf() != null){
+            if (movim.getSaldosInactivosHoyOf() != null) {
                 saldosInactivosAnteriorOfTxt.setText(df.format(movim.getSaldosInactivosHoyOf()));
                 saldosInactivosAnteriorOF = movim.getSaldosInactivosHoyOf();
-            }else{
+            } else {
                 saldosInactivosAnteriorOfTxt.setText(df.format(0.0));
             }
-            
+
         } else {
             saldoDeudCfTxt.setText("SIN MOVIMIENTOS");
             saldoDeuOfAnteriorTxt.setText("SIN MOVIMIENTOS");
         }
-        
         List<Activity> facturas = null;
         try {
             facturas = new ActivityService().getFcByFecha(fecha);
@@ -955,6 +992,9 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
             for (Activity ac : facturas) {
                 totalFacturado += ac.getTotal();
             }
+//            totalFacturado -= 5843449.98;
+//            totalFacturado -= 17416784.81;
+//totalFacturado -= 23236256.52;
             totalFacturadoTxt.setText(String.valueOf(df.format(totalFacturado)));
             subTotalIngresos += totalFacturado;
         } else {
@@ -976,12 +1016,12 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
         } else {
             totalFactOfTxt.setText("SIN MOVIM");
         }
-        
+
         deudoresHoyOf = 0.0;
-        deudoresHoyCf = 0.0;
+        deudoresHoyCf = 0.0;//16975011.89;
         saldosInactivosHoyCF = 0.0;
         saldosInactivosHoyOF = 0.0;
-        
+
         List<Cliente> clie = null;
         List<Cliente> clie2 = null;
         List<Customer> clientes = null;
@@ -990,7 +1030,7 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
         saldoCliente = 0.0;
         saldoCli2 = 0.0;
         saldoCliente2 = 0.0;
-        
+
         inicial = 0.0;
         if (cajaInicialTxt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese un importe");
@@ -1013,7 +1053,7 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
             deudoresOfHoyTxt.setText("SIN MOVIMIENTOS");
             deudoresHoyOf = 0.0;
         }
-        
+
         try {
             clie2 = new ClienteService().getClientesConSaldoInactivos();
         } catch (Exception ex) {
@@ -1029,7 +1069,7 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
             saldosInactivosHoyOfTxt.setText(df.format(0.0));
             saldosInactivosHoyOF = 0.0;
         }
-        
+
         try {
             clientes = new CustomerService().getAllCustomersConSaldo();
         } catch (Exception ex) {
@@ -1039,13 +1079,14 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
             for (Customer cu : clientes) {
                 saldoCliente += cu.getSaldo();
             }
+//            saldoCliente += 16894907.89;
             deudoresHoyTxt.setText(df.format(saldoCliente));
             deudoresHoyCf = saldoCliente;
         } else {
             deudoresHoyTxt.setText("SIN MOVIMIENTOS");
             deudoresHoyCf = 0.0;
         }
-        
+
         try {
             clientes2 = new CustomerService().getClientesConSaldoInactivos();
         } catch (Exception ex) {
@@ -1061,7 +1102,7 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
             saldosInactivosHoyCfTxt.setText(df.format(0.0));
             saldosInactivosHoyCF = 0.0;
         }
-        
+
         if (depositosEfectivoTxt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese un importe");
             depositosEfectivoTxt.requestFocus();
@@ -1111,16 +1152,17 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
         totalPagoProveedoresTxt.setText(df.format(tpp));
         efectivo = Double.valueOf(depositosEfectivoTxt.getText());
         vales = Double.valueOf(valesTxt.getText());
-        subtotalEgresos = efectivo + vales + saldoCli + saldoCliente + inicial + saldosInactivosHoyCF + saldosInactivosHoyOF;
+        subtotalEgresos = efectivo + vales + saldoCli + saldoCliente + inicial
+                + saldosInactivosHoyCF + saldosInactivosHoyOF;
         subtotalEgresosTxt.setText(String.valueOf(df.format(subtotalEgresos)));
         diferencia = subtotalEgresos - subTotalIngresos;
         diferenciaTxt.setText(String.valueOf(df.format(diferencia)));
         totalFacturadoSumadoTxt.setText(df.format(totalFacturado + totalFacOf));
 
-        totalDeudoresSumadoTxt.setText(df.format(deudoresAnteriorCf 
+        totalDeudoresSumadoTxt.setText(df.format(deudoresAnteriorCf
                 + deudoresAnteriorOf));
         totalDeudoresHoyTxt.setText(df.format(deudoresHoyCf + deudoresHoyOf));
-        diferenciaDeudoresTxt.setText(df.format(deudoresHoyCf + deudoresHoyOf 
+        diferenciaDeudoresTxt.setText(df.format(deudoresHoyCf + deudoresHoyOf
                 - deudoresAnteriorCf - deudoresAnteriorOf));
     }
 
@@ -1161,5 +1203,176 @@ public class CierreCajaDiarioFrame extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getCause());
         }
+    }
+
+    private void volver() {
+        MainFrame mf = new MainFrame();
+        mf.setVisible(true);
+        this.dispose();
+    }
+
+    private void buscarDeudoresOfCfhoy() {
+        Date fe;
+        try {
+            fe = sdf.parse(fechaTxt.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(A0TstSaldoCteFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "ERROR FECHA");
+            return;
+        }
+        Double sumaSaldosClientesOf = 0.0;
+        Double sumaSaldosClientesCf = 0.0;
+        List<Cliente> clientesParaControl = null;
+        List<Customer> customerParaControl = null;
+        try {
+            clientesParaControl = new ClienteService().getAllClientesActivos();
+            customerParaControl = new CustomerService().getAllClientesActivos();
+        } catch (Exception ex) {
+            Logger.getLogger(CierreCajaDiarioFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (clientesParaControl != null) {
+            for (Cliente cl : clientesParaControl) {
+                sumaSaldosClientesOf += cl.getSaldo();
+            }
+        }
+        if(customerParaControl != null){
+            for(Customer cu:customerParaControl){
+                sumaSaldosClientesCf += cu.getSaldo();
+            }
+        }
+        Double totalSaldosCtaCteHoy = 0.00;
+        Double totalSaldosInventHoy = 0.00;
+        CtaCteCliente ccc;
+        Inventory inv = null;
+        List<Cliente> clientes = null;
+        try {
+            clientes = new ClienteService().getAllClientes();
+        } catch (Exception ex) {
+            Logger.getLogger(A0TstSaldoCteFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (clientes != null && !clientes.isEmpty()) {
+            for (Cliente cli : clientes) {
+                ccc = null;
+                try {
+                    ccc = new CtaCteClienteService().getUltimoMovimientoPorDia(cli,fe);
+                } catch (Exception ex) {
+                    //Logger.getLogger(A0TstSaldoCteFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(ccc != null){
+                    totalSaldosCtaCteHoy += ccc.getSaldo();
+                }
+            }
+        }
+        List<Customer> customers = null;
+        try {
+            customers = new CustomerService().getAllCustomers();
+        } catch (Exception ex) {
+            Logger.getLogger(A0TstSaldoCteFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(customers != null && !customers.isEmpty()){
+            for(Customer c:customers){
+                inv = null;
+                try {
+                    inv = new InventoryService().getUltimoMovimientoPorDia(c, fe);
+                } catch (Exception ex) {
+                    //Logger.getLogger(A0TstSaldoCteFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(inv != null){
+                    totalSaldosInventHoy += inv.getSaldo();
+                }
+            }
+        }
+        if(sumaSaldosClientesOf > totalSaldosCtaCteHoy){
+            
+        }
+        
+        deudoresHoyOf = 0.0;
+        deudoresHoyCf = 0.0;//16975011.89;
+        saldosInactivosHoyCF = 0.0;
+        saldosInactivosHoyOF = 0.0;
+
+        List<Cliente> clie = null;
+        List<Cliente> clie2 = null;
+//        List<Customer> clientes = null;
+        List<Customer> clientes2 = null;
+        saldoCli = 0.0;
+        saldoCliente = 0.0;
+        saldoCli2 = 0.0;
+        saldoCliente2 = 0.0;
+
+        inicial = 0.0;
+        if (cajaInicialTxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un importe");
+            cajaInicialTxt.requestFocus();
+            return;
+        }
+        inicial = Double.valueOf(cajaInicialTxt.getText());
+        try {
+            clie = new ClienteService().getAllClienteConSaldo();
+        } catch (Exception ex) {
+            Logger.getLogger(CierreCajaDiarioFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (clie != null && !clie.isEmpty()) {
+            for (Cliente cli : clie) {
+                saldoCli += cli.getSaldo();
+            }
+            deudoresOfHoyTxt.setText(df.format(saldoCli));
+            deudoresHoyOf = saldoCli;
+        } else {
+            deudoresOfHoyTxt.setText("SIN MOVIMIENTOS");
+            deudoresHoyOf = 0.0;
+        }
+
+        try {
+            clie2 = new ClienteService().getClientesConSaldoInactivos();
+        } catch (Exception ex) {
+            Logger.getLogger(CierreCajaDiarioFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (clie2 != null && !clie2.isEmpty()) {
+            for (Cliente cli : clie2) {
+                saldoCli2 += cli.getSaldo();
+            }
+            saldosInactivosHoyOfTxt.setText(df.format(saldoCli2));
+            saldosInactivosHoyOF = saldoCli2;
+        } else {
+            saldosInactivosHoyOfTxt.setText(df.format(0.0));
+            saldosInactivosHoyOF = 0.0;
+        }
+
+        try {
+//            clientes = new CustomerService().getAllCustomersConSaldo();
+        } catch (Exception ex) {
+            Logger.getLogger(CierreCajaDiarioFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (clientes != null && !clientes.isEmpty()) {
+//            for (Customer cu : clientes) {
+//                saldoCliente += cu.getSaldo();
+//            }
+//            saldoCliente += 16894907.89;
+            deudoresHoyTxt.setText(df.format(saldoCliente));
+            deudoresHoyCf = saldoCliente;
+        } else {
+            deudoresHoyTxt.setText("SIN MOVIMIENTOS");
+            deudoresHoyCf = 0.0;
+        }
+
+        try {
+            clientes2 = new CustomerService().getClientesConSaldoInactivos();
+        } catch (Exception ex) {
+            Logger.getLogger(CierreCajaDiarioFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (clientes2 != null && !clientes2.isEmpty()) {
+            for (Customer cu : clientes2) {
+                saldoCliente2 += cu.getSaldo();
+            }
+            saldosInactivosHoyCfTxt.setText(df.format(saldoCliente2));
+            saldosInactivosHoyCF = saldoCliente2;
+        } else {
+            saldosInactivosHoyCfTxt.setText(df.format(0.0));
+            saldosInactivosHoyCF = 0.0;
+        }
+
+//        deudoresHoyTxt.setText("250.00");
+//        deudoresOfHoyTxt.setText("520.00");
     }
 }

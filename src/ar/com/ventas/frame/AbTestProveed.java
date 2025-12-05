@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.frame;
 
 import ar.com.ventas.entities.ComprobanteCompras;
@@ -66,6 +61,7 @@ public class AbTestProveed extends javax.swing.JFrame {
         clientesDuplicadosBtn = new javax.swing.JButton();
         ctaCteClientesBtn = new javax.swing.JButton();
         vencimientoEnCombrasBtn = new javax.swing.JButton();
+        calculoCierreCajaBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("AJUSTAR CTA CTE PROVEEDOR");
@@ -162,6 +158,13 @@ public class AbTestProveed extends javax.swing.JFrame {
             }
         });
 
+        calculoCierreCajaBtn.setText("Calcula cierre caja a Fecha");
+        calculoCierreCajaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculoCierreCajaBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -178,16 +181,17 @@ public class AbTestProveed extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(codigoChekTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(codigoCalcularTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(chekBtn)
-                                .addGap(26, 218, Short.MAX_VALUE)))
+                                .addGap(26, 306, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(codigoProveedorTxt)
                             .addComponent(arreglarCtaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(71, 71, 71))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(clientesDuplicadosBtn)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ajustarBtn)
@@ -200,13 +204,13 @@ public class AbTestProveed extends javax.swing.JFrame {
                                     .addComponent(verificarCtaCteEnNcBtn)
                                     .addComponent(verificarNcEnCtaCteBtn)
                                     .addComponent(ctaCteClientesBtn)
-                                    .addComponent(calcularCtaBtn))
-                                .addGap(62, 62, 62)
-                                .addComponent(vencimientoEnCombrasBtn)))
-                        .addContainerGap(60, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(clientesDuplicadosBtn)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(calcularCtaBtn)
+                                    .addComponent(codigoCalcularTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(calculoCierreCajaBtn)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(vencimientoEnCombrasBtn)
+                        .addGap(19, 19, 19))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,11 +230,13 @@ public class AbTestProveed extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tstCmpbteBtn)
-                            .addComponent(verificarNcEnCtaCteBtn)
-                            .addComponent(vencimientoEnCombrasBtn))
+                            .addComponent(verificarNcEnCtaCteBtn))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1))
-                    .addComponent(verificarCtaCteEnNcBtn))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(verificarCtaCteEnNcBtn)
+                        .addComponent(vencimientoEnCombrasBtn)
+                        .addComponent(calculoCierreCajaBtn)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(codigoProveedorTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -310,6 +316,10 @@ public class AbTestProveed extends javax.swing.JFrame {
         vencimCompras();
     }//GEN-LAST:event_vencimientoEnCombrasBtnActionPerformed
 
+    private void calculoCierreCajaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculoCierreCajaBtnActionPerformed
+        calculoCierreCaja();
+    }//GEN-LAST:event_calculoCierreCajaBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -350,6 +360,7 @@ public class AbTestProveed extends javax.swing.JFrame {
     private javax.swing.JButton ajustarBtn;
     private javax.swing.JButton arreglarCtaBtn;
     private javax.swing.JButton calcularCtaBtn;
+    private javax.swing.JButton calculoCierreCajaBtn;
     private javax.swing.JButton chekBtn;
     private javax.swing.JButton clientesDuplicadosBtn;
     private javax.swing.JTextField codigoCalcularTxt;
@@ -711,6 +722,12 @@ public class AbTestProveed extends javax.swing.JFrame {
     private void salir() {
         MainFrame mf = new MainFrame();
         mf.setVisible(true);
+        this.dispose();
+    }
+
+    private void calculoCierreCaja() {
+        A0TstSaldoCteFrame tst = new A0TstSaldoCteFrame();
+        tst.setVisible(true);
         this.dispose();
     }
 }

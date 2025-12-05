@@ -57,6 +57,32 @@ public class LectorDeExcel {
         return listaProductos;
     }
 
+    public static List<Producto> leerExcelProductosParaPreciosGondola(File file) throws IOException, BiffException, Exception {
+        Workbook archivoExcel = Workbook.getWorkbook(file);
+        int cantidadFilas = archivoExcel.getSheet(0).getRows();
+        Sheet hoja = archivoExcel.getSheet(0);
+        List<Producto> listaProductos = new ArrayList<>();
+        Boolean salir = false;
+        for (int i = 2; i < cantidadFilas; i++) {
+            try {
+                Producto prod = new Producto();
+                prod.setDetalle(hoja.getCell(2, i).getContents());
+                listaProductos.add(prod);
+                salir = false;
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error en linea: " + String.valueOf(i+1));
+                throw new Exception(ex);
+            }
+            if (salir){
+                break;
+            }
+        }
+        if (salir) {
+            listaProductos = null;            
+        }
+        return listaProductos;
+    }
+    
     public static boolean validarExtension(File archivo) {
         String[] splitNombreArchivo = archivo.getName().split("\\.");
         String extension = splitNombreArchivo[splitNombreArchivo.length - 1];

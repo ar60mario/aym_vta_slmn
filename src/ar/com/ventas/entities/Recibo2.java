@@ -2,30 +2,27 @@ package ar.com.ventas.entities;
 
 import java.util.Date;
 
-public class Recibo {
+public class Recibo2 implements Comparable<Recibo2> {
+
     private Long id;
     private Date fecha;
     private Integer numero;
     private Double importe;
     private Cliente cliente;
-    private Integer hora;
-    private Integer minuto;
-    private Integer segundo;
-    private int visto;
+    private String timer2;
+    private boolean azul;
 
-    public Recibo() {
+    public Recibo2() {
     }
 
-    public Recibo(Long id, Date fecha, Integer numero, Double importe, Cliente cliente, Integer hora, Integer minuto, Integer segundo, int visto) {
+    public Recibo2(Long id, Date fecha, Integer numero, Double importe, Cliente cliente, String timer2, boolean azul) {
         this.id = id;
         this.fecha = fecha;
         this.numero = numero;
         this.importe = importe;
         this.cliente = cliente;
-        this.hora = hora;
-        this.minuto = minuto;
-        this.segundo = segundo;
-        this.visto = visto;
+        this.timer2 = timer2;
+        this.azul = azul;
     }
 
     public Long getId() {
@@ -68,36 +65,26 @@ public class Recibo {
         this.cliente = cliente;
     }
 
-    public Integer getHora() {
-        return hora;
+    public String getTimer2() {
+        return timer2;
     }
 
-    public void setHora(Integer hora) {
-        this.hora = hora;
+    public void setTimer2(String timer2) {
+        this.timer2 = timer2;
     }
 
-    public Integer getMinuto() {
-        return minuto;
+    public boolean isAzul() {
+        return azul;
     }
 
-    public void setMinuto(Integer minuto) {
-        this.minuto = minuto;
+    public void setAzul(boolean azul) {
+        this.azul = azul;
     }
 
-    public Integer getSegundo() {
-        return segundo;
+    @Override
+    public int compareTo(Recibo2 o) {
+        String a = this.getTimer2();
+        String b = o.getTimer2();
+        return a.compareTo(b);
     }
-
-    public void setSegundo(Integer segundo) {
-        this.segundo = segundo;
-    }
-
-    public int getVisto() {
-        return visto;
-    }
-
-    public void setVisto(int visto) {
-        this.visto = visto;
-    }
-
 }

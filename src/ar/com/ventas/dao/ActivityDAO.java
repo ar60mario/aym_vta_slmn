@@ -10,6 +10,7 @@ import ar.com.ventas.entities.Customer;
 import ar.com.ventas.util.HibernateUtil;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
@@ -90,6 +91,17 @@ public class ActivityDAO extends GenericDAO{
         return facturas;
     }
     
+    public List<Activity> getFacturasByIdBetween(Long de, Long al) {
+        List<Activity> facturas;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        facturas = (List<Activity>) 
+                session.createCriteria(Activity.class)
+                        .add(Restrictions.between("id", de, al) )
+//                        .add(Restrictions.lt("total", 0.0))
+                        .list();
+        return facturas;
+    }
+    
     public List<Activity> getFcByFecha(Date fecha) {
         List<Activity> facturas = null;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -127,15 +139,18 @@ public class ActivityDAO extends GenericDAO{
     }
     
     public List<Activity> getFacturasByPeriodo(Date fechaDe, Date fechaA) {
-        List<Activity> facturas = null;
+        List<Activity> facturas;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        facturas = (List<Activity>) 
-                session.createCriteria(Activity.class)
-                        .add(Restrictions.between("fecha", fechaDe, fechaA))
-                        .addOrder(Order.asc("fecha"))
-                        .addOrder(Order.asc("letra"))
-                        .addOrder(Order.asc("numeroFactura"))
-                        .list();
+        Criteria criteria = session.createCriteria(Activity.class);
+        criteria.add(Restrictions.between("fecha", fechaDe, fechaA));
+//        criteria.setMaxResults(1);
+        facturas = (List<Activity>) criteria.list();
+                
+//                        .add(Restrictions.between("fecha", fechaDe, fechaA))
+////                        .addOrder(Order.asc("fecha"))
+////                        .addOrder(Order.asc("letra"))
+////                        .addOrder(Order.asc("numeroFactura"))
+//                        .list();
         return facturas;
     }
     

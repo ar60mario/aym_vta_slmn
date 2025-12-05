@@ -1,6 +1,3 @@
-/*
- * Aqui va toda la lógica de validaciones respecto a los Administradores.
- */
 package ar.com.ventas.bo;
 
 import ar.com.ventas.dao.CustomerDAO;
@@ -39,12 +36,13 @@ public class CustomerBO {
         return customer;
     }
 
-    public void updateCustomer(Customer customer) throws Exception {
+    public Customer updateCustomer(Customer customer) throws Exception {
         try {
             customer = (Customer) dao.update(customer);
         } catch (HibernateException ex) {
             throw new Exception(ex);
         }
+        return customer;
     }
 
     public List<Customer> getCustomerByPagina(int paginaActual) throws Exception {
@@ -115,6 +113,16 @@ public class CustomerBO {
         List<Customer> listadoCustomers = null;
         try {
             listadoCustomers = dao.getAllClientesConSaldo();
+        } catch (HibernateException ex) {
+            throw new Exception(ex);
+        }
+        return listadoCustomers;
+    }
+    
+    public List<Customer> getAllClientesActivos() throws Exception {
+        List<Customer> listadoCustomers = null;
+        try {
+            listadoCustomers = dao.getAllClientesActivos();
         } catch (HibernateException ex) {
             throw new Exception(ex);
         }

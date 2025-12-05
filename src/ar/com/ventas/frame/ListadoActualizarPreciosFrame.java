@@ -428,7 +428,6 @@ public class ListadoActualizarPreciosFrame extends javax.swing.JFrame {
                                 if (r == 3) {
                                     por_iva = 21F;
                                 } else {
-
                                     por_iva = 21F;
                                 }
                             }

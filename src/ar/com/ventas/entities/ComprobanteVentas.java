@@ -1,4 +1,3 @@
-
 package ar.com.ventas.entities;
 
 public class ComprobanteVentas implements Comparable<ComprobanteVentas> {

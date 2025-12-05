@@ -61,6 +61,16 @@ public class ProductoBO {
         return producto;
     }
 
+    public Producto getByDescripcion(String detalle) throws Exception {
+        Producto producto = null;
+        try {
+            producto = dao.getByDescripcion(detalle);
+        } catch (HibernateException ex) {
+            throw new Exception(ex);
+        }
+        return producto;
+    }
+    
     public Producto getAllProductoByCodigo(Integer codigo) throws Exception {
         Producto producto = null;
         try {

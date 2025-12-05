@@ -30,6 +30,15 @@ public class ProductoDAO extends GenericoDAO {
         Producto producto = (Producto) criteria.uniqueResult();
         return producto;
     }
+    
+    public Producto getByDescripcion(String detalle) {
+        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+        Criteria criteria = session.createCriteria(Producto.class);
+        criteria.add(Restrictions.eq("detalle", detalle));
+//        criteria.add(Restrictions.eq("inactivo", false));
+        Producto producto = (Producto) criteria.uniqueResult();
+        return producto;
+    }
 
     public Producto getAllByCodigo(Integer codigo) {
         Session session = HibernateUtils.getSessionFactory().getCurrentSession();

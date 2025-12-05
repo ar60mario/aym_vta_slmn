@@ -365,9 +365,14 @@ public class ListaFacturas extends javax.swing.JFrame {
         }
         try {
             facturas = new IvaVentasService().getFacturasEntreFechas(fechaDe, fechaA);
+            //facts = new ActivityService().getFacturasByIdBetween(111140L, 111186L);
             facts = new ActivityService().getAllActivityByPeriodo(fechaDe, fechaA);
         } catch (Exception ex) {
             Logger.getLogger(ListaFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(facturas);
+            System.out.println(facts);
+            JOptionPane.showMessageDialog(this, "ERROR 367-368 FACTURAS");
+            return;
         }
         if (facturas != null && !facturas.isEmpty()) {
             DefaultTableModel dtm = (DefaultTableModel) tablaFacturas.getModel();

@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package ar.com.ventas.util;
 
-/**
- *
- * @author Marcela
- */
+
 public class Constantes {
     public static final int MAX_RESULTS = 20;
     
@@ -21,4 +13,20 @@ public class Constantes {
 //    public static final String EXTENSION_EXCEL_5 = "xlm";
 //    public static final String EXTENSION_EXCEL_6 = "xlsm";
     public static final Double maximoVenta = 99999999.99;
+    
+    private static int r = 245;
+    private static final int g = 222;
+    private static final int b = 179;
+
+    public static int getR() {
+        return r;
+    }
+
+    public static int getG() {
+        return g;
+    }
+
+    public static int getB() {
+        return b;
+    }
 }

@@ -59,6 +59,7 @@ public class RankingDeudoresFrame extends javax.swing.JFrame {
         ctaCteClienteBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("RANKING DEUDORES");
 
         tablaSaldos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

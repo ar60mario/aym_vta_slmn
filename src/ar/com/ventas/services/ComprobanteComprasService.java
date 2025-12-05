@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.services;
 
 import ar.com.ventas.bo.ComprobanteComprasBO;
@@ -23,10 +18,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-/**
- *
- * @author Mario
- */
 public class ComprobanteComprasService {
 
     public ComprobanteCompras saveComprobante(ComprobanteCompras ic) throws Exception {
@@ -45,7 +36,7 @@ public class ComprobanteComprasService {
 
     public void saveComprobanteCompleto(ComprobanteCompras ic, SeguimientoCompras sc,
             List<ComprobanteComprasDetalle> icd, Proveedor proveedor,
-            CuentaCorrienteProveedor ccp, 
+            CuentaCorrienteProveedor ccp,
             IvaCompras ico, Date f1, Date f2) throws Exception {
         Session session = HibernateUtils.getSessionFactory().getCurrentSession();
         Transaction tx = session.beginTransaction();
@@ -84,7 +75,22 @@ public class ComprobanteComprasService {
         }
         return cc;
     }
-    
+
+    public ComprobanteCompras getComprobanteNcByProveedorAndNumero(Proveedor p, String l, Integer s,
+            Integer n) throws Exception {
+        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        ComprobanteCompras cc = null;
+        try {
+            cc = new ComprobanteComprasBO().getComprobanteNcByProveedorAndNumero(p, l, s, n);
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+            throw new Exception(ex);
+        }
+        return cc;
+    }
+
     public ComprobanteCompras getById(Long id) throws Exception {
         Session session = HibernateUtils.getSessionFactory().getCurrentSession();
         Transaction tx = session.beginTransaction();
@@ -221,7 +227,7 @@ public class ComprobanteComprasService {
         }
         return cc;
     }
-    
+
     public List<ComprobanteCompras> getFacturasPrimerVencimiento(Proveedor proveedor) throws Exception {
         Session session = HibernateUtils.getSessionFactory().getCurrentSession();
         Transaction tx = session.beginTransaction();
@@ -235,7 +241,7 @@ public class ComprobanteComprasService {
         }
         return cc;
     }
-    
+
     public List<ComprobanteCompras> getFacturasPrimerVencimiento3(Proveedor proveedor) throws Exception {
         Session session = HibernateUtils.getSessionFactory().getCurrentSession();
         Transaction tx = session.beginTransaction();
@@ -249,7 +255,7 @@ public class ComprobanteComprasService {
         }
         return cc;
     }
-    
+
     public List<ComprobanteCompras> getNotasCreditoImpagosByProveedor(Proveedor proveedor) throws Exception {
         Session session = HibernateUtils.getSessionFactory().getCurrentSession();
         Transaction tx = session.beginTransaction();

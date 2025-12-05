@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.util;
 
 import ar.com.ventas.entities.Cliente;
@@ -24,9 +19,10 @@ import javax.swing.JOptionPane;
  * @author argia
  */
 public class CuentaCorrienteClienteUtil {
+
     public Integer ajusteSaldoCliente1(Double imp_py, Double imp_re, Double sal2_cu,
-            Double sal2_cli, Customer cus, Cliente cli, String tx_py, String tx_re){
-        
+            Double sal2_cli, Customer cus, Cliente cli, String tx_py, String tx_re) {
+
         Routines rou;
         try {
             rou = new RoutinesService().getFacturas(1L);
@@ -53,7 +49,7 @@ public class CuentaCorrienteClienteUtil {
         Payment py = new Payment();
         py.setCliente(cus);
         py.setFecha(new Date());
-        py.setImporte(imp_py);
+        py.setImporte(-imp_py);
         py.setNumero(nr);
         py.setVisto(0);
 
@@ -96,10 +92,10 @@ public class CuentaCorrienteClienteUtil {
 
         return 0; //esta bien
     }
-    
+
     public Integer ajusteSaldoCliente2(Double imp_py, Double imp_re, Double sal2_cu,
-            Double sal2_cli, Customer cus, Cliente cli, String tx_py, String tx_re){
-        
+            Double sal2_cli, Customer cus, Cliente cli, String tx_py, String tx_re) {
+
         Routines rou;
         try {
             rou = new RoutinesService().getFacturas(1L);
@@ -133,7 +129,7 @@ public class CuentaCorrienteClienteUtil {
         Recibo rec = new Recibo();
         rec.setCliente(cli);
         rec.setFecha(new Date());
-        rec.setImporte(imp_re);
+        rec.setImporte(-imp_re);
         rec.setNumero(nrc);
         rec.setVisto(0);
 

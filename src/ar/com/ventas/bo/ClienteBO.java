@@ -66,7 +66,7 @@ public class ClienteBO {
         return cliente;
     }
 
-    public void updateCliente(Cliente cliente) throws Exception {
+    public Cliente updateCliente(Cliente cliente) throws Exception {
 
         // Primero guardo la dirección del administrador.
 //        DomicilioBO domicilioBO = new DomicilioBO();        
@@ -78,7 +78,7 @@ public class ClienteBO {
         } catch (HibernateException ex) {
             throw new Exception(ex);
         }
-
+        return cliente;
     }
 
     public List<Cliente> getClienteByPagina(int paginaActual) throws Exception {

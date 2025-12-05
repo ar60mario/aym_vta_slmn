@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.frame;
 
 import ar.com.ventas.entities.Activity;
@@ -1001,7 +996,8 @@ public class NotaCreditoDeFacturaFrame extends javax.swing.JFrame {
         } else {
             id_v = 99L;
         }
-        clienteNC.setSaldo(clienteNC.getSaldo() + totalNotaCredito);
+        Double saldo_cliente = clienteNC.getSaldo() + totalNotaCredito;
+        clienteNC.setSaldo(saldo_cliente);
         try {
             new CustomerService().updateCustomer(clienteNC);
         } catch (Exception ex) {
@@ -1102,7 +1098,7 @@ public class NotaCreditoDeFacturaFrame extends javax.swing.JFrame {
         ccc.setDebe(0.0);
         ccc.setHaber(-totalNotaCredito);
         ccc.setTipo("NC");
-        ccc.setSaldo(saldoCliente + totalNotaCredito);
+        ccc.setSaldo(saldo_cliente);
         try {
             new InventoryService().saveInventory(ccc);
         } catch (Exception ex) {
@@ -1247,7 +1243,9 @@ public class NotaCreditoDeFacturaFrame extends javax.swing.JFrame {
                     str0 = str0.replace(",", ".");
                     doble = Double.valueOf(str0);
                     largo = doble.intValue();
-                    espacio = "       "; // 7
+//                    System.out.println(largo);
+//                    JOptionPane.showMessageDialog(this, "VER");
+                    espacio = "        "; // 7
                     largo = String.valueOf(largo).length();
                     espacio = espacio.substring(largo);
                     renglones[r] = renglones[r] + espacio + df.format(doble) + " ";

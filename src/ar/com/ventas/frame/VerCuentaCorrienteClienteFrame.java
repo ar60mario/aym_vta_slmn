@@ -1,32 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.ventas.frame;
 
 import ar.com.ventas.entities.Cliente;
 import ar.com.ventas.entities.ClienteTraba;
-import ar.com.ventas.entities.Configuracion;
 import ar.com.ventas.entities.CtaCteCliente;
 import ar.com.ventas.entities.Customer;
 import ar.com.ventas.entities.CustomerTraba;
 import ar.com.ventas.entities.Inventory;
-import ar.com.ventas.entities.Payment;
 import ar.com.ventas.entities.Recibo;
-import ar.com.ventas.entities.Routines;
 import ar.com.ventas.entities.Usuario;
 import ar.com.ventas.main.MainFrame;
 import ar.com.ventas.services.ClienteService;
 import ar.com.ventas.services.ClienteTrabaService;
-import ar.com.ventas.services.ConfiguracionService;
 import ar.com.ventas.services.CtaCteClienteService;
 import ar.com.ventas.services.CustomerService;
 import ar.com.ventas.services.CustomerTrabaService;
 import ar.com.ventas.services.InventoryService;
-import ar.com.ventas.services.PaymentService;
 import ar.com.ventas.services.ReciboService;
-import ar.com.ventas.services.RoutinesService;
 import ar.com.ventas.services.UsuarioService;
 import ar.com.ventas.util.CuentaCorrienteClienteUtil;
 import java.awt.Rectangle;
@@ -49,10 +38,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Mario
- */
 public class VerCuentaCorrienteClienteFrame extends javax.swing.JFrame {
 
     private Cliente cliente = null;
@@ -554,6 +539,7 @@ public class VerCuentaCorrienteClienteFrame extends javax.swing.JFrame {
 
     private void hastaFechaTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hastaFechaTxtKeyPressed
         if (evt.getKeyCode() == 10) {
+            
             if (hastaFechaTxt.getText().isEmpty()) {
                 hastaFechaTxt.setText(sdf.format(new Date()));
                 hastaFechaTxt.requestFocus();
@@ -570,6 +556,7 @@ public class VerCuentaCorrienteClienteFrame extends javax.swing.JFrame {
                     }
                     f = f + "/" + an;
                     hastaFechaTxt.setText(hastaFechaTxt.getText() + "/" + f);
+                    
                     buscarCtaCteByCliente();
                 } else {
                     if (largo == 5) {
@@ -718,6 +705,7 @@ public class VerCuentaCorrienteClienteFrame extends javax.swing.JFrame {
     }
 
     private void buscarCtaCteByCliente() {
+        
         borrarTablas();
         //ew ArrayList<CtaCteCliente>();
         List<Inventory> cuenta = null; //ew ArrayList<Inventory>();
@@ -739,6 +727,9 @@ public class VerCuentaCorrienteClienteFrame extends javax.swing.JFrame {
             hastaFechaTxt.requestFocus();
             return;
         }
+//        System.out.println(fechaDe);
+//                    System.out.println(fechaHasta);
+//                    JOptionPane.showMessageDialog(this, "VER");
         cta = null;
         try {
             cta = new CtaCteClienteService().getAllCtaCteClienteByCodigoAndFecha(cliente, fechaDe, fechaHasta);
@@ -968,10 +959,10 @@ public class VerCuentaCorrienteClienteFrame extends javax.swing.JFrame {
     }
 
     private void ingresarCobro() {
-        String codi = cliente.getCodigo();
+        String codigo = cliente.getCodigo();
         cliente = null;
         try {
-            cliente = new ClienteService().getClienteByCodigo(codi);
+            cliente = new ClienteService().getClienteByCodigo(codigo);
         } catch (Exception ex) {
             Logger.getLogger(VerCuentaCorrienteClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Error al leer Cliente");
@@ -986,7 +977,7 @@ public class VerCuentaCorrienteClienteFrame extends javax.swing.JFrame {
                 return;
             }
         }
-        String codigo = cliente.getCodigo();
+//        String codigo = cliente.getCodigo();
         CustomerTraba cuTr = null;
         ClienteTraba ct = null;
         try {
@@ -994,6 +985,8 @@ public class VerCuentaCorrienteClienteFrame extends javax.swing.JFrame {
             cuTr = new CustomerTrabaService().getClienteByCodigo(codigo);
         } catch (Exception ex) {
             Logger.getLogger(VerCuentaCorrienteClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "ERROR EN CLIENTE");
+            return;
         }
         if (ct.getTraba1() != null) {
             if (ct.getTraba1()) {
